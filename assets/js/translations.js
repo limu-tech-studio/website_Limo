@@ -6,7 +6,7 @@
 const TRANSLATIONS = {
   en: {
     metaTitle: "Limo — Technology Studio | Italy & Global",
-    metaDesc: "Limo is a six-person technology team based in Italy and working globally. We help traditional businesses grow with websites, apps, and AI.",
+    metaDesc: "Limo is a seven-person technology team based in Italy and working globally. We help traditional businesses grow with websites, apps, and AI.",
     
     // Brand & Nav
     brandName: "limo",
@@ -45,10 +45,10 @@ const TRANSLATIONS = {
     // Team Section
     teamTag: "People",
     teamTitle: "The team",
-    teamSubtitle: "A six-person technology studio combining research rigor with modern product design.",
+    teamSubtitle: "A seven-person technology studio combining research rigor with modern product design.",
     
     team1Name: "Mojtaba Roshana",
-    team1Role: "AI & Data Science Lead",
+    team1Role: "Founder & AI/Data Science Lead",
     team1Bio: "Specialized in complex systems, data science, and machine learning architectures.",
     
     team2Name: "Amin Almasi",
@@ -71,6 +71,10 @@ const TRANSLATIONS = {
     team6Role: "Machine Learning & Software Engineer",
     team6Bio: "Researching advanced ML models and engineering reliable computational software.",
 
+    team7Name: "Maryam Moozardzade",
+    team7Role: "Business Development & Designer",
+    team7Bio: "Focusing on project acquisition in Iran and contributing to creative product design.",
+
     teamLinkedInBtn: "LinkedIn Profile",
 
     // Contact Section
@@ -88,7 +92,7 @@ const TRANSLATIONS = {
 
   fa: {
     metaTitle: "لیمو — استودیوی فناوری | ایتالیا و جهانی",
-    metaDesc: "لیمو یک تیم فناوری شش‌نفره مستقر در ایتالیا است که به صورت جهانی فعالیت می‌کند. ما به کسب‌وکارهای سنتی کمک می‌کنیم تا با وب‌سایت‌ها، برنامه‌ها و هوش مصنوعی رشد کنند.",
+    metaDesc: "لیمو یک تیم فناوری هفت‌نفره مستقر در ایتالیا است که به صورت جهانی فعالیت می‌کند. ما به کسب‌وکارهای سنتی کمک می‌کنیم تا با وب‌سایت‌ها، برنامه‌ها و هوش مصنوعی رشد کنند.",
     
     // Brand & Nav
     brandName: "لیمو",
@@ -127,10 +131,10 @@ const TRANSLATIONS = {
     // Team Section
     teamTag: "اعضای تیم",
     teamTitle: "تیم ما",
-    teamSubtitle: "استودیوی فناوری شش‌نفره که دقت علمی و پژوهشی را با برتری در طراحی محصول ترکیب می‌کند.",
+    teamSubtitle: "استودیوی فناوری هفت‌نفره که دقت علمی و پژوهشی را با برتری در طراحی محصول ترکیب می‌کند.",
     
     team1Name: "مجتبی روشنا",
-    team1Role: "ارشد هوش مصنوعی و علم داده",
+    team1Role: "مؤسس و ارشد هوش مصنوعی و علم داده",
     team1Bio: "متخصص سیستم‌های پیچیده، علم داده و معماری‌های یادگیری ماشین.",
     
     team2Name: "امین الماسی",
@@ -153,6 +157,10 @@ const TRANSLATIONS = {
     team6Role: "مهندس یادگیری ماشین و نرم‌افزار",
     team6Bio: "پژوهش بر روی مدل‌های پیشرفته یادگیری ماشین و مهندسی سیستم‌های نرم‌افزاری مطمئن.",
 
+    team7Name: "مریم موزردزاده",
+    team7Role: "مدیر توسعه پروژه و طراحی",
+    team7Bio: "شناسایی و جذب پروژه‌ها در ایران و مشارکت در طراحی خلاقانه محصولات.",
+
     teamLinkedInBtn: "پروفایل لینکدین",
 
     // Contact Section
@@ -170,7 +178,7 @@ const TRANSLATIONS = {
 
   it: {
     metaTitle: "Limo — Studio Tecnologico | Italia & Globale",
-    metaDesc: "Limo è un team tecnologico di sei persone con sede in Italia e operativo a livello globale. Aiutiamo le aziende tradizionali a crescere con siti web, app e IA.",
+    metaDesc: "Limo è un team tecnologico di sette persone con sede in Italia e operativo a livello globale. Aiutiamo le aziende tradizionali a crescere con siti web, app e IA.",
     
     // Brand & Nav
     brandName: "limo",
@@ -209,10 +217,10 @@ const TRANSLATIONS = {
     // Team Section
     teamTag: "Persone",
     teamTitle: "Il team",
-    teamSubtitle: "Uno studio tecnologico di sei persone che unisce il rigore della ricerca al design di prodotto moderno.",
+    teamSubtitle: "Uno studio tecnologico di sette persone che unisce il rigore della ricerca al design di prodotto moderno.",
     
     team1Name: "Mojtaba Roshana",
-    team1Role: "AI & Data Science Lead",
+    team1Role: "Fondatore & AI & Data Science Lead",
     team1Bio: "Specializzato in sistemi complessi, data science e architetture di machine learning.",
     
     team2Name: "Amin Almasi",
@@ -235,6 +243,10 @@ const TRANSLATIONS = {
     team6Role: "Machine Learning & Software Engineer",
     team6Bio: "Ricerca su modelli avanzati di ML e ingegneria di sistemi software affidabili.",
 
+    team7Name: "Maryam Moozardzade",
+    team7Role: "Business Development & Designer",
+    team7Bio: "Focalizzata sull'acquisizione di progetti in Iran e sul design creativo di prodotto.",
+
     teamLinkedInBtn: "Profilo LinkedIn",
 
     // Contact Section
@@ -252,7 +264,7 @@ const TRANSLATIONS = {
 
   tr: {
     metaTitle: "Limo — Teknoloji Stüdyosu | İtalya & Küresel",
-    metaDesc: "Limo, İtalya merkezli ve küresel ölçekte çalışan altı kişilik bir teknoloji ekibidir. Geleneksel işletmelerin web siteleri, uygulamalar ve yapay zeka ile büyümesine yardımcı oluyoruz.",
+    metaDesc: "Limo, İtalya merkezli ve küresel ölçekte çalışan yedi kişilik bir teknoloji ekibidir. Geleneksel işletmelerin web siteleri, uygulamalar ve yapay zeka ile büyümesine yardımcı oluyoruz.",
     
     // Brand & Nav
     brandName: "limo",
@@ -291,10 +303,10 @@ const TRANSLATIONS = {
     // Team Section
     teamTag: "Ekibimiz",
     teamTitle: "Ekip",
-    teamSubtitle: "Araştırma titizliğini modern ürün tasarımıyla birleştiren altı kişilik teknoloji stüdyosu.",
+    teamSubtitle: "Araştırma titizliğini modern ürün tasarımıyla birleştiren yedi kişilik teknoloji stüdyosu.",
     
     team1Name: "Mojtaba Roshana",
-    team1Role: "AI & Data Science Lideri",
+    team1Role: "Kurucu & YZ ve Veri Bilimi Lideri",
     team1Bio: "Karmaşık sistemler, veri bilimi ve makine öğrenimi mimarilerinde uzman.",
     
     team2Name: "Amin Almasi",
@@ -316,6 +328,10 @@ const TRANSLATIONS = {
     team6Name: "Taha Enayat",
     team6Role: "Makine Öğrenimi & Yazılım Mühendisi",
     team6Bio: "Gelişmiş ML modelleri araştırması ve güvenilir hesaplamalı yazılım mühendisliği.",
+
+    team7Name: "Maryam Moozardzade",
+    team7Role: "İş Geliştirme & Tasarım Uzmanı",
+    team7Bio: "İran'daki projelerin edinilmesine odaklanma ve yaratıcı ürün tasarımına katkıda bulunma.",
 
     teamLinkedInBtn: "LinkedIn Profili",
 

@@ -44,6 +44,12 @@ const LIMO_CONFIG = {
       name: "Taha Enayat",
       linkedIn: "https://www.linkedin.com/in/taha-enayat/",
       avatarPath: "./assets/images/team/taha.svg"
+    },
+    {
+      id: "maryam",
+      name: "Maryam Moozardzade",
+      linkedIn: "https://www.linkedin.com/in/maryam-moozardzade-240797395/",
+      avatarPath: "./assets/images/team/maryam.svg"
     }
   ]
 };

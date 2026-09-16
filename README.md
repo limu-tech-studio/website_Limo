@@ -1,6 +1,6 @@
 # Limo — Technology Studio Website
 
-A lightweight, high-performance, single-page website for **Limo**, a six-person technology studio based in Italy and working globally.
+A lightweight, high-performance, single-page website for **Limo**, a seven-person technology studio based in Italy and working globally.
 
 ## Features & Highlights
 
@@ -9,7 +9,7 @@ A lightweight, high-performance, single-page website for **Limo**, a six-person 
 - **Complete RTL Support**: Native Right-To-Left direction switching (`dir="rtl"`) for Persian with customized Vazirmatn typography and mirrored layouts.
 - **Client-side State**: Remembers chosen language across sessions using `localStorage` without page reloads.
 - **Interactive Hero Animation**: Lightweight vector SVG graphic illustrating traditional business matrix connecting into a global digital ecosystem.
-- **6 Equal Team Cards**: Polished mobile-ready cards with verified roles, concise bios, and direct LinkedIn profile links.
+- **7 Equal Team Cards**: Polished mobile-ready cards with verified roles, concise bios, and direct LinkedIn profile links.
 - **No Build Step**: 100% static HTML5, CSS3, and modern JavaScript. Ready for free hosting on GitHub Pages.
 
 ---
@@ -98,7 +98,8 @@ website_Limo/
 │           ├── ramtin.svg
 │           ├── parisa.svg
 │           ├── roya.svg
-│           └── taha.svg
+│           ├── taha.svg
+│           └── maryam.svg
 ```
 
 ---
