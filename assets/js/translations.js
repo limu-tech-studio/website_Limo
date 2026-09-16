@@ -72,8 +72,8 @@ const TRANSLATIONS = {
     team6Bio: "Researching advanced ML models and engineering reliable computational software.",
 
     team7Name: "Maryam Moozardzade",
-    team7Role: "Business Development & Designer",
-    team7Bio: "Focusing on project acquisition in Iran and contributing to creative product design.",
+    team7Role: "Business Development & Product Designer",
+    team7Bio: "Specialized in project acquisition, business development, and creative product design.",
 
     teamLinkedInBtn: "LinkedIn Profile",
 
@@ -158,8 +158,8 @@ const TRANSLATIONS = {
     team6Bio: "پژوهش بر روی مدل‌های پیشرفته یادگیری ماشین و مهندسی سیستم‌های نرم‌افزاری مطمئن.",
 
     team7Name: "مریم موزردزاده",
-    team7Role: "مدیر توسعه پروژه و طراحی",
-    team7Bio: "شناسایی و جذب پروژه‌ها در ایران و مشارکت در طراحی خلاقانه محصولات.",
+    team7Role: "توسعه کسب‌وکار و طراح محصول",
+    team7Bio: "متخصص در توسعه بازار، جذب پروژه‌ها و طراحی خلاقانه محصولات.",
 
     teamLinkedInBtn: "پروفایل لینکدین",
 
@@ -244,8 +244,8 @@ const TRANSLATIONS = {
     team6Bio: "Ricerca su modelli avanzati di ML e ingegneria di sistemi software affidabili.",
 
     team7Name: "Maryam Moozardzade",
-    team7Role: "Business Development & Designer",
-    team7Bio: "Focalizzata sull'acquisizione di progetti in Iran e sul design creativo di prodotto.",
+    team7Role: "Business Development & Product Designer",
+    team7Bio: "Specializzata nell'acquisizione di progetti, sviluppo business e design creativo di prodotto.",
 
     teamLinkedInBtn: "Profilo LinkedIn",
 
@@ -330,8 +330,8 @@ const TRANSLATIONS = {
     team6Bio: "Gelişmiş ML modelleri araştırması ve güvenilir hesaplamalı yazılım mühendisliği.",
 
     team7Name: "Maryam Moozardzade",
-    team7Role: "İş Geliştirme & Tasarım Uzmanı",
-    team7Bio: "İran'daki projelerin edinilmesine odaklanma ve yaratıcı ürün tasarımına katkıda bulunma.",
+    team7Role: "İş Geliştirme & Ürün Tasarımcısı",
+    team7Bio: "Proje edinimi, iş geliştirme ve yaratıcı ürün tasarımında uzmanlaşmış.",
 
     teamLinkedInBtn: "LinkedIn Profili",
 
