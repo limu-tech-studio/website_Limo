@@ -4,8 +4,9 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Current active language state
+  // Current active language & theme state
   let currentLang = localStorage.getItem('limo_lang') || 'en';
+  let storedTheme = localStorage.getItem('limo_theme');
 
   // DOM Elements
   const htmlEl = document.documentElement;
@@ -17,6 +18,59 @@ document.addEventListener('DOMContentLoaded', () => {
   const navbar = document.getElementById('navbar');
   const emailBoxText = document.getElementById('email-display');
   const copyEmailBtn = document.getElementById('copy-email-btn');
+
+  /* ------------------------------------------------------------------------
+     0. Appearance & Theme Manager (Apple HIG Light/Dark)
+     ------------------------------------------------------------------------ */
+  function getSystemTheme() {
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  function applyTheme(theme) {
+    htmlEl.setAttribute('data-theme', theme);
+    
+    // Update theme icons in desktop and mobile toggles
+    document.querySelectorAll('.theme-toggle').forEach(btn => {
+      const sunIcon = btn.querySelector('.sun-icon');
+      const moonIcon = btn.querySelector('.moon-icon');
+      if (sunIcon && moonIcon) {
+        if (theme === 'dark') {
+          sunIcon.style.display = 'block';
+          moonIcon.style.display = 'none';
+        } else {
+          sunIcon.style.display = 'none';
+          moonIcon.style.display = 'block';
+        }
+      }
+    });
+  }
+
+  // Initial Theme setup
+  const activeTheme = storedTheme || getSystemTheme();
+  applyTheme(activeTheme);
+
+  // Toggle Theme handler
+  function toggleTheme() {
+    const currentTheme = htmlEl.getAttribute('data-theme') || getSystemTheme();
+    const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('limo_theme', nextTheme);
+    applyTheme(nextTheme);
+  }
+
+  // Attach event listeners to theme buttons
+  const themeBtn = document.getElementById('theme-toggle');
+  const mobileThemeBtn = document.getElementById('mobile-theme-toggle');
+  if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+  if (mobileThemeBtn) mobileThemeBtn.addEventListener('click', toggleTheme);
+
+  // System theme preference listener
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('limo_theme')) {
+        applyTheme(e.matches ? 'dark' : 'light');
+      }
+    });
+  }
 
   // Set email from config
   if (emailBoxText && typeof LIMO_CONFIG !== 'undefined') {
@@ -58,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       if (TRANSLATIONS[lang] && TRANSLATIONS[lang][key]) {
-        el.textContent = TRANSLATIONS[lang][key];
+        el.innerHTML = TRANSLATIONS[lang][key];
       }
     });
 

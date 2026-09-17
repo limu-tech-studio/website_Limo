@@ -16,7 +16,7 @@ const TRANSLATIONS = {
 
     // Hero Section
     heroBadge: "Based in Italy. Working globally.",
-    heroTitle: "Fresh thinking. Smarter business.",
+    heroTitle: "Fresh thinking.<br>Smarter business.",
     heroSubhead: "We help traditional businesses grow with websites, apps, and AI.",
     heroCtaPrimary: "Meet the team",
     heroCtaSecondary: "Let's talk",
@@ -102,7 +102,7 @@ const TRANSLATIONS = {
 
     // Hero Section
     heroBadge: "مستقر در ایتالیا. فعالیت جهانی.",
-    heroTitle: "تفکر تازه. کسب‌وکار هوشمندتر.",
+    heroTitle: "تفکر تازه.<br>کسب‌وکار هوشمندتر.",
     heroSubhead: "ما به کسب‌وکارهای سنتی کمک می‌کنیم تا با وب‌سایت‌ها، برنامه‌ها و هوش مصنوعی رشد کنند.",
     heroCtaPrimary: "آشنایی با تیم",
     heroCtaSecondary: "گفتگو کنیم",
@@ -188,7 +188,7 @@ const TRANSLATIONS = {
 
     // Hero Section
     heroBadge: "Con sede in Italia. Operativi a livello globale.",
-    heroTitle: "Pensiero fresco. Business più intelligente.",
+    heroTitle: "Pensiero fresco.<br>Business più intelligente.",
     heroSubhead: "Aiutiamo le aziende tradizionali a crescere con siti web, app e intelligenza artificiale.",
     heroCtaPrimary: "Incontra il team",
     heroCtaSecondary: "Parliamo",
@@ -274,7 +274,7 @@ const TRANSLATIONS = {
 
     // Hero Section
     heroBadge: "İtalya merkezli. Küresel ölçekte.",
-    heroTitle: "Taze düşünce. Daha akıllı işler.",
+    heroTitle: "Taze düşünce.<br>Daha akıllı işler.",
     heroSubhead: "Geleneksel işletmelerin web siteleri, uygulamalar ve yapay zeka ile büyümesine yardımcı oluyoruz.",
     heroCtaPrimary: "Takımla tanışın",
     heroCtaSecondary: "Konuşalım",

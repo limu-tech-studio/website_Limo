@@ -1,0 +1,50 @@
+<!-- =====================================================
+     HERO GRAPHIC — VERSION 1 (Original)
+     Simple paths + 3 nodes (Building, Hub, Cloud, AI)
+     ===================================================== -->
+<svg class="hero-svg-anim" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Subtle Background Grid -->
+  <pattern id="gridPattern" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(26,28,30,0.04)" stroke-width="1"/>
+  </pattern>
+  <rect width="400" height="400" fill="url(#gridPattern)"/>
+
+  <!-- Connecting Lemon-curved Paths -->
+  <path d="M 80 280 C 140 280, 150 160, 200 160 C 250 160, 260 80, 320 80" stroke="#FACC15" stroke-width="3" stroke-linecap="round" class="line-flow"/>
+  <path d="M 80 320 C 180 320, 160 220, 240 220 C 300 220, 280 140, 320 140" stroke="#EAB308" stroke-width="2" stroke-dasharray="4 4"/>
+  <path d="M 80 240 Q 200 200, 320 280" stroke="#3E6B45" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+
+  <!-- Nodes: Traditional Business Node (Bottom Left) -->
+  <g transform="translate(80, 280)">
+    <rect x="-30" y="-30" width="60" height="60" rx="12" fill="#1C1E21"/>
+    <!-- Classic Building / Matrix Icon -->
+    <path d="M -12 10 L -12 -10 L 0 -18 L 12 -10 L 12 10 Z" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+    <rect x="-6" y="-2" width="4" height="4" fill="#EAB308"/>
+    <rect x="2" y="-2" width="4" height="4" fill="#EAB308"/>
+  </g>
+
+  <!-- Digital Hub Node (Center) -->
+  <g transform="translate(200, 160)">
+    <circle cx="0" cy="0" r="28" fill="#FAF8F5" stroke="#EAB308" stroke-width="4"/>
+    <circle cx="0" cy="0" r="14" fill="#EAB308" class="node-pulse"/>
+    <!-- Lemon Icon silhouette center -->
+    <path d="M -4 -4 C -2 -8, 4 -8, 6 -4 C 8 0, 4 6, 0 6 C -4 6, -6 0, -4 -4 Z" fill="#1C1E21"/>
+  </g>
+
+  <!-- Connected Global Ecosystem Nodes (Top Right & Right) -->
+  <g transform="translate(320, 80)">
+    <circle cx="0" cy="0" r="22" fill="#3E6B45"/>
+    <!-- Cloud / Web Icon -->
+    <path d="M -8 2 C -10 2, -12 0, -10 -4 C -8 -8, -2 -8, 0 -5 C 2 -7, 8 -6, 8 -2 C 10 -2, 10 2, 8 2 Z" fill="#FFFFFF"/>
+  </g>
+
+  <g transform="translate(320, 280)">
+    <circle cx="0" cy="0" r="22" fill="#EAB308" class="node-pulse-delayed"/>
+    <!-- AI / Spark Icon -->
+    <path d="M 0 -8 L 2 -2 L 8 0 L 2 2 L 0 8 L -2 2 L -8 0 L -2 -2 Z" fill="#1C1E21"/>
+  </g>
+
+  <!-- Data Flow Dots -->
+  <circle cx="140" cy="220" r="5" fill="#EAB308"/>
+  <circle cx="260" cy="120" r="5" fill="#3E6B45"/>
+</svg>
