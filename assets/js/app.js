@@ -1,12 +1,12 @@
 /* ==========================================================================
-   Limo Studio - Main Interactive Application Logic
+   Limu Studio - Main Interactive Application Logic
    Multilingual i18n engine, RTL state manager, Mobile Menu & Scroll Reveal
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
   // Current active language & theme state
-  let currentLang = localStorage.getItem('limo_lang') || 'en';
-  let storedTheme = localStorage.getItem('limo_theme');
+  let currentLang = localStorage.getItem('limu_lang') || localStorage.getItem('limo_lang') || 'en';
+  let storedTheme = localStorage.getItem('limu_theme') || localStorage.getItem('limo_theme');
 
   // DOM Elements
   const htmlEl = document.documentElement;
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function applyTheme(theme) {
     htmlEl.setAttribute('data-theme', theme);
     
-    // Update theme icons in desktop and mobile toggles
+    // Update theme icons in desktop and mobile header toggles
     document.querySelectorAll('.theme-toggle').forEach(btn => {
       const sunIcon = btn.querySelector('.sun-icon');
       const moonIcon = btn.querySelector('.moon-icon');
@@ -43,38 +43,59 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     });
+
+    // Update segmented theme option buttons in mobile drawer
+    document.querySelectorAll('.theme-option').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-theme-val') === theme);
+    });
+
+    // Update mobile browser status bar / navigation theme color
+    const metaThemeColor = document.getElementById('meta-theme-color');
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute('content', theme === 'dark' ? '#0D0E11' : '#FAF8F5');
+    }
   }
 
   // Initial Theme setup
   const activeTheme = storedTheme || getSystemTheme();
   applyTheme(activeTheme);
 
-  // Toggle Theme handler
+  // Toggle Theme handler (for 1-click icon buttons)
   function toggleTheme() {
     const currentTheme = htmlEl.getAttribute('data-theme') || getSystemTheme();
     const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('limo_theme', nextTheme);
+    localStorage.setItem('limu_theme', nextTheme);
     applyTheme(nextTheme);
   }
 
-  // Attach event listeners to theme buttons
-  const themeBtn = document.getElementById('theme-toggle');
-  const mobileThemeBtn = document.getElementById('mobile-theme-toggle');
-  if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
-  if (mobileThemeBtn) mobileThemeBtn.addEventListener('click', toggleTheme);
+  // Attach event listeners to all theme toggle buttons
+  document.querySelectorAll('.theme-toggle').forEach(btn => {
+    btn.addEventListener('click', toggleTheme);
+  });
+
+  // Attach event listeners to segmented theme option buttons
+  document.querySelectorAll('.theme-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const selectedTheme = btn.getAttribute('data-theme-val');
+      if (selectedTheme) {
+        localStorage.setItem('limu_theme', selectedTheme);
+        applyTheme(selectedTheme);
+      }
+    });
+  });
 
   // System theme preference listener
   if (window.matchMedia) {
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-      if (!localStorage.getItem('limo_theme')) {
+      if (!localStorage.getItem('limu_theme') && !localStorage.getItem('limo_theme')) {
         applyTheme(e.matches ? 'dark' : 'light');
       }
     });
   }
 
   // Set email from config
-  if (emailBoxText && typeof LIMO_CONFIG !== 'undefined') {
-    emailBoxText.textContent = LIMO_CONFIG.contactEmail;
+  if (emailBoxText && (typeof LIMU_CONFIG !== 'undefined' || typeof LIMO_CONFIG !== 'undefined')) {
+    emailBoxText.textContent = typeof LIMU_CONFIG !== 'undefined' ? LIMU_CONFIG.contactEmail : LIMO_CONFIG.contactEmail;
   }
 
   /* ------------------------------------------------------------------------
@@ -83,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function setLanguage(lang) {
     if (!TRANSLATIONS[lang]) lang = 'en';
     currentLang = lang;
-    localStorage.setItem('limo_lang', lang);
+    localStorage.setItem('limu_lang', lang);
 
     // Update document attributes
     htmlEl.setAttribute('lang', lang);
@@ -130,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
       mobileDrawer.classList.remove('open');
       mobileToggle.classList.remove('active');
       mobileToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
     }
   }
 
@@ -177,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const isOpen = mobileDrawer.classList.toggle('open');
       mobileToggle.classList.toggle('active', isOpen);
       mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
     });
 
     // Close drawer when clicking mobile nav links
@@ -185,6 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileDrawer.classList.remove('open');
         mobileToggle.classList.remove('active');
         mobileToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
       });
     });
   }
@@ -194,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
      ------------------------------------------------------------------------ */
   if (copyEmailBtn) {
     copyEmailBtn.addEventListener('click', () => {
-      const email = typeof LIMO_CONFIG !== 'undefined' ? LIMO_CONFIG.contactEmail : "limo.tech.studio@gmail.com";
+      const email = typeof LIMU_CONFIG !== 'undefined' ? LIMU_CONFIG.contactEmail : (typeof LIMO_CONFIG !== 'undefined' ? LIMO_CONFIG.contactEmail : "limo.tech.studio@gmail.com");
       navigator.clipboard.writeText(email).then(() => {
         const originalText = copyEmailBtn.textContent;
         const copiedMsg = TRANSLATIONS[currentLang]?.copied || "Copied!";

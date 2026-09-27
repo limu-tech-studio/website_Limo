@@ -1,9 +1,9 @@
 /* ==========================================================================
-   Limo Studio - Configuration Settings
+   Limu Studio - Configuration Settings
    Easy-to-edit studio settings, contact email, and profile options.
    ========================================================================== */
 
-const LIMO_CONFIG = {
+const LIMU_CONFIG = {
   // Studio Contact Email Address
   contactEmail: "limo.tech.studio@gmail.com",
 
@@ -53,3 +53,5 @@ const LIMO_CONFIG = {
     }
   ]
 };
+
+const LIMO_CONFIG = LIMU_CONFIG;

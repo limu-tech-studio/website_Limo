@@ -1,18 +1,23 @@
 /* ==========================================================================
-   Limo Studio - Multilingual Dictionary
+   Limu Studio - Multilingual Dictionary
    Complete translations for English (EN), Persian (FA), Italian (IT), Turkish (TR)
    ========================================================================== */
 
 const TRANSLATIONS = {
   en: {
-    metaTitle: "Limo — Technology Studio | Italy & Global",
-    metaDesc: "Limo is a seven-person technology team based in Italy and working globally. We help traditional businesses grow with websites, apps, and AI.",
+    metaTitle: "Limu — Technology Studio | Italy & Global",
+    metaDesc: "Limu is a seven-person technology team based in Italy and working globally. We help traditional businesses grow with websites, apps, and AI.",
     
     // Brand & Nav
-    brandName: "limo",
+    brandName: "limu",
+    navMission: "Mission",
     navServices: "Services",
     navTeam: "Team",
     navContact: "Contact",
+    appearanceLabel: "Appearance",
+    themeLight: "Light",
+    themeDark: "Dark",
+    languageLabel: "Language",
 
     // Hero Section
     heroBadge: "Based in Italy. Working globally.",
@@ -25,6 +30,17 @@ const TRANSLATIONS = {
     heroAnimLabelOld: "Traditional Business",
     heroAnimLabelNew: "Connected Studio Ecosystem",
 
+    // Mission Section
+    missionTag: "Our Mission",
+    missionTitle: "What is our mission?",
+    missionStatement: "We want to help your business grow, digitalize, and integrate useful AI into your stack.",
+    missionPoint1Title: "Grow Your Business",
+    missionPoint1Desc: "Unlocking new market opportunities and sustainable revenue growth with modern digital tools.",
+    missionPoint2Title: "Digitalize Operations",
+    missionPoint2Desc: "Transforming traditional workflows into agile, cloud-ready, and high-performance digital platforms.",
+    missionPoint3Title: "Integrate Useful AI",
+    missionPoint3Desc: "Embedding practical, high-value machine learning and automation directly into your everyday stack.",
+
     // Services Section
     servicesTag: "Capabilities",
     servicesTitle: "What we do",
@@ -36,11 +52,11 @@ const TRANSLATIONS = {
     service2Title: "AI & Automation",
     service2Desc: "AI-powered features, computer vision, and workflow automation to streamline operations.",
     
-    service3Title: "Apps & Games",
-    service3Desc: "Mobile apps, software applications, and interactive games crafted with high precision.",
+    service3Title: "Apps",
+    service3Desc: "Mobile apps and software applications crafted with high precision.",
     
-    service4Title: "Data & Intelligence",
-    service4Desc: "Data analysis, machine learning, and deep learning models to unlock strategic insights.",
+    service4Title: "Data-Driven Consultation",
+    service4Desc: "Data analysis, strategic insights, and machine learning models to guide informed business growth.",
 
     // Team Section
     teamTag: "People",
@@ -48,11 +64,11 @@ const TRANSLATIONS = {
     teamSubtitle: "A seven-person technology studio combining research rigor with modern product design.",
     
     team1Name: "Mojtaba Roshana",
-    team1Role: "Founder & AI/Data Science Lead",
+    team1Role: "Founder",
     team1Bio: "Specialized in complex systems, data science, and machine learning architectures.",
     
     team2Name: "Amin Almasi",
-    team2Role: "Full-Stack & Engineering Lead",
+    team2Role: "Full-Stack Engineer",
     team2Bio: "Architecting robust web platforms, software infrastructure, and cloud solutions.",
     
     team3Name: "Ramtin Kivi",
@@ -86,7 +102,7 @@ const TRANSLATIONS = {
     copied: "Copied!",
 
     // Footer
-    footerText: "Limo · Based in Italy. Working globally.",
+    footerText: "Limu · Based in Italy. Working globally.",
     footerRights: "© All rights reserved."
   },
 
@@ -96,9 +112,14 @@ const TRANSLATIONS = {
     
     // Brand & Nav
     brandName: "لیمو",
+    navMission: "مأموریت ما",
     navServices: "خدمات",
     navTeam: "اعضای تیم",
     navContact: "تماس با ما",
+    appearanceLabel: "حالت نمایش",
+    themeLight: "روشن",
+    themeDark: "تاریک",
+    languageLabel: "زبان",
 
     // Hero Section
     heroBadge: "مستقر در ایتالیا. فعالیت جهانی.",
@@ -111,6 +132,17 @@ const TRANSLATIONS = {
     heroAnimLabelOld: "کسب‌وکار سنتی",
     heroAnimLabelNew: "زیست‌بوم دیجیتال متصل",
 
+    // Mission Section
+    missionTag: "مأموریت ما",
+    missionTitle: "مأموریت ما چیست؟",
+    missionStatement: "ما می‌خواهیم به رشد کسب‌وکار شما، دیجیتالی‌شدن فرآیندها و ادغام هوش مصنوعی کاربردی در استک شما کمک کنیم.",
+    missionPoint1Title: "رشد کسب‌وکار شما",
+    missionPoint1Desc: "کشف فرصت‌های جدید بازار و دستیابی به رشد درآمد پایدار با ابزارهای مدرن دیجیتال.",
+    missionPoint2Title: "دیجیتالی‌شدن فرآیندها",
+    missionPoint2Desc: "تبدیل روش‌های سنتی به پلتفرم‌های دیجیتال چابک، امن و با عملکرد بالا.",
+    missionPoint3Title: "ادغام هوش مصنوعی کاربردی",
+    missionPoint3Desc: "تلفیق مستقیم مدل‌های عملیاتی یادگیری ماشین و اتوماسیون در استک نرم‌افزاری شما.",
+
     // Services Section
     servicesTag: "توانمندی‌ها",
     servicesTitle: "آنچه انجام می‌دهیم",
@@ -122,11 +154,11 @@ const TRANSLATIONS = {
     service2Title: "هوش مصنوعی و اتوماسیون",
     service2Desc: "قابلیت‌های مبتنی بر هوش مصنوعی، بینایی ماشین و اتوماسیون فرآیندها برای بهینه‌سازی فعالیت‌ها.",
     
-    service3Title: "برنامه‌ها و بازی‌ها",
-    service3Desc: "اپلیکیشن‌های موبایل، نرم‌افزارهای کاربردی و بازی‌های تعاملی با دقت و کیفیت بالا.",
+    service3Title: "اپلیکیشن‌ها",
+    service3Desc: "اپلیکیشن‌های موبایل و نرم‌افزارهای کاربردی با دقت و کیفیت بالا.",
     
-    service4Title: "داده و تحلیل هوشمند",
-    service4Desc: "تحلیل داده‌ها، یادگیری ماشین و مدل‌های یادگیری عمیق برای کشف راهکارهای راهبردی.",
+    service4Title: "مشاوره مبتنی بر داده",
+    service4Desc: "تحلیل داده‌ها، ارائه بینش‌های راهبردی و مدل‌های یادگیری ماشین برای رشد آگاهانه کسب‌وکار.",
 
     // Team Section
     teamTag: "اعضای تیم",
@@ -134,11 +166,11 @@ const TRANSLATIONS = {
     teamSubtitle: "استودیوی فناوری هفت‌نفره که دقت علمی و پژوهشی را با برتری در طراحی محصول ترکیب می‌کند.",
     
     team1Name: "مجتبی روشنا",
-    team1Role: "مؤسس و ارشد هوش مصنوعی و علم داده",
+    team1Role: "مؤسس",
     team1Bio: "متخصص سیستم‌های پیچیده، علم داده و معماری‌های یادگیری ماشین.",
     
     team2Name: "امین الماسی",
-    team2Role: "ارشد فول‌استک و مهندسی نرم‌افزار",
+    team2Role: "مهندس فول‌استک",
     team2Bio: "معمار پلتفرم‌های قدرتمند وب، زیرساخت‌های نرم‌افزاری و راهکارهای ابری.",
     
     team3Name: "رامتین کیوی",
@@ -177,14 +209,19 @@ const TRANSLATIONS = {
   },
 
   it: {
-    metaTitle: "Limo — Studio Tecnologico | Italia & Globale",
-    metaDesc: "Limo è un team tecnologico di sette persone con sede in Italia e operativo a livello globale. Aiutiamo le aziende tradizionali a crescere con siti web, app e IA.",
+    metaTitle: "Limu — Studio Tecnologico | Italia & Globale",
+    metaDesc: "Limu è un team tecnologico di sette persone con sede in Italia e operativo a livello globale. Aiutiamo le aziende tradizionali a crescere con siti web, app e IA.",
     
     // Brand & Nav
-    brandName: "limo",
+    brandName: "limu",
+    navMission: "Missione",
     navServices: "Servizi",
     navTeam: "Team",
     navContact: "Contatti",
+    appearanceLabel: "Aspetto",
+    themeLight: "Chiaro",
+    themeDark: "Scuro",
+    languageLabel: "Lingua",
 
     // Hero Section
     heroBadge: "Con sede in Italia. Operativi a livello globale.",
@@ -197,6 +234,17 @@ const TRANSLATIONS = {
     heroAnimLabelOld: "Business Tradizionale",
     heroAnimLabelNew: "Ecosistema Digitale Connesso",
 
+    // Mission Section
+    missionTag: "La Nostra Missione",
+    missionTitle: "Qual è la nostra missione?",
+    missionStatement: "Vogliamo aiutare la tua azienda a crescere, digitalizzarsi e integrare un'intelligenza artificiale utile nel tuo stack.",
+    missionPoint1Title: "Fai Crescere la Tua Azienda",
+    missionPoint1Desc: "Accedere a nuove opportunità di mercato e a una crescita sostenibile con strumenti digitali all'avanguardia.",
+    missionPoint2Title: "Digitalizza le Operazioni",
+    missionPoint2Desc: "Trasformare i processi tradizionali in piattaforme digitali moderne, agili e ad alte prestazioni.",
+    missionPoint3Title: "Integra un'IA Utile",
+    missionPoint3Desc: "Integrare soluzioni pratiche di machine learning e automazione ad alto valore direttamente nel tuo stack.",
+
     // Services Section
     servicesTag: "Competenze",
     servicesTitle: "Cosa facciamo",
@@ -208,11 +256,11 @@ const TRANSLATIONS = {
     service2Title: "IA & Automazione",
     service2Desc: "Funzionalità basate su IA, computer vision e automazione dei processi per ottimizzare le operazioni.",
     
-    service3Title: "App & Game",
-    service3Desc: "Applicazioni mobili, software aziendali e giochi interattivi realizzati con elevata precisione.",
+    service3Title: "App",
+    service3Desc: "Applicazioni mobili e software aziendali realizzati con elevata precisione.",
     
-    service4Title: "Dati & Intelligence",
-    service4Desc: "Analisi dei dati, machine learning e modelli di deep learning per sbloccare visioni strategiche.",
+    service4Title: "Consulenza Data-Driven",
+    service4Desc: "Analisi dei dati, visioni strategiche e modelli di machine learning per guidare una crescita aziendale consapevole.",
 
     // Team Section
     teamTag: "Persone",
@@ -220,11 +268,11 @@ const TRANSLATIONS = {
     teamSubtitle: "Uno studio tecnologico di sette persone che unisce il rigore della ricerca al design di prodotto moderno.",
     
     team1Name: "Mojtaba Roshana",
-    team1Role: "Fondatore & AI & Data Science Lead",
+    team1Role: "Fondatore",
     team1Bio: "Specializzato in sistemi complessi, data science e architetture di machine learning.",
     
     team2Name: "Amin Almasi",
-    team2Role: "Full-Stack & Engineering Lead",
+    team2Role: "Ingegnere Full-Stack",
     team2Bio: "Progetta piattaforme web robuste, infrastrutture software e soluzioni cloud.",
     
     team3Name: "Ramtin Kivi",
@@ -258,19 +306,24 @@ const TRANSLATIONS = {
     copied: "Copiato!",
 
     // Footer
-    footerText: "Limo · Con sede in Italia. Operativi a livello globale.",
+    footerText: "Limu · Con sede in Italia. Operativi a livello globale.",
     footerRights: "© Tutti i diritti riservati."
   },
 
   tr: {
-    metaTitle: "Limo — Teknoloji Stüdyosu | İtalya & Küresel",
-    metaDesc: "Limo, İtalya merkezli ve küresel ölçekte çalışan yedi kişilik bir teknoloji ekibidir. Geleneksel işletmelerin web siteleri, uygulamalar ve yapay zeka ile büyümesine yardımcı oluyoruz.",
+    metaTitle: "Limu — Teknoloji Stüdyosu | İtalya & Küresel",
+    metaDesc: "Limu, İtalya merkezli ve küresel ölçekte çalışan yedi kişilik bir teknoloji ekibidir. Geleneksel işletmelerin web siteleri, uygulamalar ve yapay zeka ile büyümesine yardımcı oluyoruz.",
     
     // Brand & Nav
-    brandName: "limo",
+    brandName: "limu",
+    navMission: "Misyonumuz",
     navServices: "Hizmetler",
     navTeam: "Takım",
     navContact: "İletişim",
+    appearanceLabel: "Görünüm",
+    themeLight: "Açık",
+    themeDark: "Koyu",
+    languageLabel: "Dil",
 
     // Hero Section
     heroBadge: "İtalya merkezli. Küresel ölçekte.",
@@ -283,6 +336,17 @@ const TRANSLATIONS = {
     heroAnimLabelOld: "Geleneksel İşletme",
     heroAnimLabelNew: "Bağlantılı Dijital Ekosistem",
 
+    // Mission Section
+    missionTag: "Misyonumuz",
+    missionTitle: "Misyonumuz nedir?",
+    missionStatement: "İşletmenizin büyümesine, dijitalleşmesine ve kullanışlı yapay zekayı teknoloji yığınınıza entegre etmesine yardımcı olmak istiyoruz.",
+    missionPoint1Title: "İşletmenizi Büyütün",
+    missionPoint1Desc: "Modern dijital araçlarla yeni pazar fırsatlarının kilidini açın ve sürdürülebilir gelir artışı elde edin.",
+    missionPoint2Title: "Süreçleri Dijitalleştirin",
+    missionPoint2Desc: "Geleneksel iş akışlarını çevik, bulut uyumlu ve yüksek performanslı dijital platformlara dönüştürün.",
+    missionPoint3Title: "Kullanışlı YZ Entegre Edin",
+    missionPoint3Desc: "Pratik ve yüksek değerli makine öğrenimini doğrudan günlük teknoloji yığınınıza entegre edin.",
+
     // Services Section
     servicesTag: "Yeteneklerimiz",
     servicesTitle: "Ne yapıyoruz",
@@ -294,11 +358,11 @@ const TRANSLATIONS = {
     service2Title: "Yapay Zeka & Otomasyon",
     service2Desc: "Operasyonları kolaylaştırmak için yapay zeka destekli özellikler, bilgisayarlı görü ve iş akışı otomasyonu.",
     
-    service3Title: "Uygulamalar & Oyunlar",
-    service3Desc: "Yüksek hassasiyetle tasarlanmış mobil uygulamalar, masaüstü yazılımlar ve etkileşimli oyunlar.",
+    service3Title: "Uygulamalar",
+    service3Desc: "Yüksek hassasiyetle tasarlanmış mobil uygulamalar ve masaüstü yazılımlar.",
     
-    service4Title: "Veri & Zeka",
-    service4Desc: "Stratejik içgörüler ortaya çıkarmak için veri analizi, makine öğrenimi ve derin öğrenme modelleri.",
+    service4Title: "Veri Odaklı Danışmanlık",
+    service4Desc: "Bilinçli iş büyümesine rehberlik etmek için veri analizi, stratejik içgörüler ve makine öğrenimi modelleri.",
 
     // Team Section
     teamTag: "Ekibimiz",
@@ -306,11 +370,11 @@ const TRANSLATIONS = {
     teamSubtitle: "Araştırma titizliğini modern ürün tasarımıyla birleştiren yedi kişilik teknoloji stüdyosu.",
     
     team1Name: "Mojtaba Roshana",
-    team1Role: "Kurucu & YZ ve Veri Bilimi Lideri",
+    team1Role: "Kurucu",
     team1Bio: "Karmaşık sistemler, veri bilimi ve makine öğrenimi mimarilerinde uzman.",
     
     team2Name: "Amin Almasi",
-    team2Role: "Full-Stack & Mühendislik Lideri",
+    team2Role: "Full-Stack Mühendisi",
     team2Bio: "Güçlü web platformları, yazılım altyapısı ve bulut çözümleri mimarı.",
     
     team3Name: "Ramtin Kivi",
@@ -344,7 +408,7 @@ const TRANSLATIONS = {
     copied: "Kopyalandı!",
 
     // Footer
-    footerText: "Limo · İtalya merkezli. Küresel ölçekte.",
+    footerText: "Limu · İtalya merkezli. Küresel ölçekte.",
     footerRights: "© Tüm hakları saklıdır."
   }
 };

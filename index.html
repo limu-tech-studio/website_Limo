@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Limo — Technology Studio | Italy & Global</title>
-  <meta name="description" content="Limo is a seven-person technology team based in Italy and working globally. We help traditional businesses grow with websites, apps, and AI.">
+  <title>Limu — Technology Studio | Italy & Global</title>
+  <meta name="description" content="Limu is a seven-person technology team based in Italy and working globally. We help traditional businesses grow with websites, apps, and AI.">
   
   <!-- OpenGraph & Social Metadata -->
-  <meta property="og:title" content="Limo — Technology Studio">
+  <meta property="og:title" content="Limu — Technology Studio">
   <meta property="og:description" content="We help traditional businesses grow with websites, apps, and AI. Based in Italy. Working globally.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="./assets/images/logo.svg">
@@ -16,6 +16,7 @@
   <!-- Favicons -->
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
   <link rel="alternate icon" href="./favicon.ico">
+  <meta name="theme-color" content="#FAF8F5" id="meta-theme-color">
 
   <!-- Fonts & Stylesheet -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,13 +32,14 @@
     <div class="container nav-container">
       
       <!-- Brand Logo -->
-      <a href="#" class="brand-logo" aria-label="Limo Studio Home">
-        <img src="./assets/images/logo-icon.svg" alt="Limo logo" width="38" height="38">
-        <span data-i18n="brandName">limo</span>
+      <a href="#" class="brand-logo" aria-label="Limu Studio Home">
+        <img src="./assets/images/logo-icon.svg" alt="Limu logo" width="38" height="38">
+        <span data-i18n="brandName">limu</span>
       </a>
 
       <!-- Desktop Navigation Menu -->
       <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="#mission" class="nav-link" data-i18n="navMission">Mission</a>
         <a href="#services" class="nav-link" data-i18n="navServices">Services</a>
         <a href="#team" class="nav-link" data-i18n="navTeam">Team</a>
         <a href="#contact" class="nav-link" data-i18n="navContact">Contact</a>
@@ -87,12 +89,33 @@
         </div>
       </nav>
 
-      <!-- Mobile Hamburger Button -->
-      <button class="mobile-toggle" id="mobile-toggle" aria-expanded="false" aria-label="Toggle navigation menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <!-- Mobile Actions (Theme Toggle & Hamburger Button) -->
+      <div class="mobile-actions">
+        <button class="theme-toggle" id="mobile-nav-theme-toggle" aria-label="Toggle light/dark appearance" title="Toggle Appearance">
+          <!-- Sun Icon (shown in dark mode) -->
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <!-- Moon Icon (shown in light mode) -->
+          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <button class="mobile-toggle" id="mobile-toggle" aria-expanded="false" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
 
     </div>
   </header>
@@ -100,38 +123,49 @@
   <!-- Mobile Drawer Menu -->
   <div class="mobile-drawer" id="mobile-drawer" aria-label="Mobile Navigation">
     <div class="mobile-nav-links">
+      <a href="#mission" class="mobile-nav-link" data-i18n="navMission">Mission</a>
       <a href="#services" class="mobile-nav-link" data-i18n="navServices">Services</a>
       <a href="#team" class="mobile-nav-link" data-i18n="navTeam">Team</a>
       <a href="#contact" class="mobile-nav-link" data-i18n="navContact">Contact</a>
     </div>
 
-    <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
-      <span style="font-size: 0.9rem; font-weight: 600; color: var(--text-secondary);">Appearance</span>
-      <button class="theme-toggle" id="mobile-theme-toggle" aria-label="Toggle appearance">
-        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
-          <circle cx="12" cy="12" r="5"></circle>
-          <line x1="12" y1="1" x2="12" y2="3"></line>
-          <line x1="12" y1="21" x2="12" y2="23"></line>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-          <line x1="1" y1="12" x2="3" y2="12"></line>
-          <line x1="21" y1="12" x2="23" y2="12"></line>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>
-        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-      </button>
-    </div>
+    <div class="mobile-drawer-controls">
+      <!-- Appearance Mode Grid (Light / Dark Segmented Control) -->
+      <div class="mobile-theme-section">
+        <p class="mobile-control-label" data-i18n="appearanceLabel">Appearance</p>
+        <div class="mobile-theme-grid">
+          <button type="button" class="theme-option" data-theme-val="light" aria-label="Light Mode">
+            <svg class="theme-option-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <span data-i18n="themeLight">Light</span>
+          </button>
+          <button type="button" class="theme-option" data-theme-val="dark" aria-label="Dark Mode">
+            <svg class="theme-option-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <span data-i18n="themeDark">Dark</span>
+          </button>
+        </div>
+      </div>
 
-    <div>
-      <p style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.75rem;">Language</p>
-      <div class="mobile-lang-grid">
-        <button class="btn btn-secondary lang-option" data-lang="en">English</button>
-        <button class="btn btn-secondary lang-option" data-lang="fa">فارسی</button>
-        <button class="btn btn-secondary lang-option" data-lang="it">Italiano</button>
-        <button class="btn btn-secondary lang-option" data-lang="tr">Türkçe</button>
+      <!-- Language Switcher Grid -->
+      <div class="mobile-lang-section">
+        <p class="mobile-control-label" data-i18n="languageLabel">Language</p>
+        <div class="mobile-lang-grid">
+          <button class="btn btn-secondary lang-option" data-lang="en">English</button>
+          <button class="btn btn-secondary lang-option" data-lang="fa">فارسی</button>
+          <button class="btn btn-secondary lang-option" data-lang="it">Italiano</button>
+          <button class="btn btn-secondary lang-option" data-lang="tr">Türkçe</button>
+        </div>
       </div>
     </div>
   </div>
@@ -248,7 +282,7 @@
                   <circle cx="200" cy="200" r="38" fill="none" stroke="rgba(255,255,255,0.32)" stroke-width="1.5"/>
                   <text x="200" y="207" text-anchor="middle"
                     font-family="-apple-system,BlinkMacSystemFont,'SF Pro Display','Inter',sans-serif"
-                    font-size="17" font-weight="800" fill="#1C1D1F" letter-spacing="-0.5">limo</text>
+                    font-size="17" font-weight="800" fill="#1C1D1F" letter-spacing="-0.5">limu</text>
 
                   <!-- Node 1 – Web (top-left 72,102) -->
                   <g class="nf1">
@@ -343,7 +377,74 @@
     </section>
 
 
-    <!-- 2. SERVICES SECTION -->
+    <!-- 2. MISSION SECTION -->
+    <section class="section mission-section" id="mission">
+      <div class="container">
+        
+        <div class="section-header reveal">
+          <span class="section-tag" data-i18n="missionTag">Our Mission</span>
+          <h2 class="section-title" data-i18n="missionTitle">What is our mission?</h2>
+        </div>
+
+        <div class="mission-highlight-card reveal">
+          <div class="mission-quote-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+            </svg>
+          </div>
+          <p class="mission-statement" data-i18n="missionStatement">
+            We want to help your business grow, digitalize, and integrate useful AI into your stack.
+          </p>
+        </div>
+
+        <div class="mission-grid">
+          
+          <!-- Mission Pillar 1: Grow -->
+          <div class="mission-card reveal">
+            <div class="mission-icon-wrapper">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                <polyline points="17 6 23 6 23 12"></polyline>
+              </svg>
+            </div>
+            <h3 class="mission-card-title" data-i18n="missionPoint1Title">Grow Your Business</h3>
+            <p class="mission-card-desc" data-i18n="missionPoint1Desc">Unlocking new market opportunities and sustainable revenue growth with modern digital tools.</p>
+          </div>
+
+          <!-- Mission Pillar 2: Digitalize -->
+          <div class="mission-card reveal">
+            <div class="mission-icon-wrapper">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <h3 class="mission-card-title" data-i18n="missionPoint2Title">Digitalize Operations</h3>
+            <p class="mission-card-desc" data-i18n="missionPoint2Desc">Transforming traditional workflows into agile, cloud-ready, and high-performance digital platforms.</p>
+          </div>
+
+          <!-- Mission Pillar 3: Integrate AI -->
+          <div class="mission-card reveal">
+            <div class="mission-icon-wrapper">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a10 10 0 1 0 10 10H12V2z"></path>
+                <path d="M12 12L2.5 7.5"></path>
+                <path d="M12 12v10"></path>
+                <circle cx="12" cy="12" r="3" fill="var(--lemon-accent)"></circle>
+              </svg>
+            </div>
+            <h3 class="mission-card-title" data-i18n="missionPoint3Title">Integrate Useful AI</h3>
+            <p class="mission-card-desc" data-i18n="missionPoint3Desc">Embedding practical, high-value machine learning and automation directly into your everyday stack.</p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- 3. SERVICES SECTION -->
     <section class="section" id="services">
       <div class="container">
         
@@ -387,28 +488,28 @@
           <!-- Service Card 3 -->
           <div class="service-card reveal">
             <div class="service-icon-wrapper">
-              <!-- Apps & Games SVG Icon -->
+              <!-- Apps SVG Icon -->
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="5" y="2" width="14" height="20" rx="3" ry="3"></rect>
                 <line x1="12" y1="18" x2="12.01" y2="18" stroke-width="3"></line>
               </svg>
             </div>
-            <h3 class="service-title" data-i18n="service3Title">Apps & Games</h3>
-            <p class="service-desc" data-i18n="service3Desc">Mobile apps, software applications, and interactive games.</p>
+            <h3 class="service-title" data-i18n="service3Title">Apps</h3>
+            <p class="service-desc" data-i18n="service3Desc">Mobile apps and software applications.</p>
           </div>
 
           <!-- Service Card 4 -->
           <div class="service-card reveal">
             <div class="service-icon-wrapper">
-              <!-- Data & Intelligence SVG Icon -->
+              <!-- Data-Driven Consultation SVG Icon -->
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="18" y1="20" x2="18" y2="10"></line>
                 <line x1="12" y1="20" x2="12" y2="4"></line>
                 <line x1="6" y1="20" x2="6" y2="14"></line>
               </svg>
             </div>
-            <h3 class="service-title" data-i18n="service4Title">Data & Intelligence</h3>
-            <p class="service-desc" data-i18n="service4Desc">Data analysis, machine learning, and deep learning.</p>
+            <h3 class="service-title" data-i18n="service4Title">Data-Driven Consultation</h3>
+            <p class="service-desc" data-i18n="service4Desc">Data analysis, strategic insights, and machine learning models.</p>
           </div>
 
         </div>
@@ -416,8 +517,8 @@
     </section>
 
 
-    <!-- 3. TEAM SECTION -->
-    <section class="section" id="team" style="background-color: rgba(244, 241, 234, 0.4);">
+    <!-- 4. TEAM SECTION -->
+    <section class="section section-alt" id="team">
       <div class="container">
         
         <div class="section-header reveal">
@@ -434,7 +535,7 @@
               <img src="./assets/images/team/mojtaba.svg" alt="Mojtaba Roshana" class="team-avatar-img" width="120" height="120" loading="eager">
             </div>
             <h3 class="team-name" data-i18n="team1Name">Mojtaba Roshana</h3>
-            <span class="team-role" data-i18n="team1Role">Founder & AI/Data Science Lead</span>
+            <span class="team-role" data-i18n="team1Role">Founder</span>
             <p class="team-bio" data-i18n="team1Bio">Specialized in complex systems, data science, and machine learning architectures.</p>
             <a href="https://www.linkedin.com/in/mojtabaroshana/" target="_blank" rel="noopener noreferrer" class="team-linkedin">
               <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
@@ -448,7 +549,7 @@
               <img src="./assets/images/team/amin.svg" alt="Amin Almasi" class="team-avatar-img" width="120" height="120" loading="eager">
             </div>
             <h3 class="team-name" data-i18n="team2Name">Amin Almasi</h3>
-            <span class="team-role" data-i18n="team2Role">Full-Stack & Engineering Lead</span>
+            <span class="team-role" data-i18n="team2Role">Full-Stack Engineer</span>
             <p class="team-bio" data-i18n="team2Bio">Architecting robust web platforms and scalable software infrastructure.</p>
             <a href="https://www.linkedin.com/in/amin-a-7578631b7/" target="_blank" rel="noopener noreferrer" class="team-linkedin">
               <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
@@ -531,7 +632,7 @@
     </section>
 
 
-    <!-- 4. CONTACT & CALLOUT SECTION -->
+    <!-- 5. CONTACT & CALLOUT SECTION -->
     <section class="contact-section" id="contact">
       <div class="container">
         <div class="contact-card reveal">
@@ -565,12 +666,12 @@
   <footer class="footer">
     <div class="container footer-container">
       <div class="brand-logo" style="font-size: 1.15rem;">
-        <img src="./assets/images/logo-icon.svg" alt="Limo logo" width="30" height="30">
-        <span data-i18n="brandName">limo</span>
+        <img src="./assets/images/logo-icon.svg" alt="Limu logo" width="30" height="30">
+        <span data-i18n="brandName">limu</span>
       </div>
 
       <div class="footer-copy">
-        <span data-i18n="footerText">Limo · Based in Italy. Working globally.</span>
+        <span data-i18n="footerText">Limu · Based in Italy. Working globally.</span>
       </div>
 
       <div class="footer-tagline" data-i18n="footerRights">

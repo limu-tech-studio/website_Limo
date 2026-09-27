@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Limo Studio — Internal Docs</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ivory:      #FAF8F5;
+      --charcoal:   #2C2C2C;
+      --lemon:      #F5E642;
+      --leaf:       #7B9E87;
+      --leaf-light: #C8DDD1;
+      --border:     #E2DDD8;
+      --sidebar-w:  260px;
+      --header-h:   56px;
+      --font-sans:  'Inter', 'Segoe UI', system-ui, sans-serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+      --radius:     8px;
+      --shadow:     0 1px 4px rgba(0,0,0,.08);
+    }
+
+    html { font-size: 15px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background: #F0EDE8;
+      color: var(--charcoal);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Top Bar ── */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--header-h);
+      background: var(--charcoal);
+      color: #fff;
+      display: flex; align-items: center; gap: 16px;
+      padding: 0 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.18);
+    }
+    .topbar .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: 1.05rem; letter-spacing: -.3px;
+      color: var(--lemon); text-decoration: none;
+    }
+    .topbar .logo svg { width: 28px; height: 28px; }
+    .topbar .doc-title {
+      flex: 1; font-size: .9rem; opacity: .7;
+    }
+    .topbar .badge {
+      background: var(--leaf); color: #fff; font-size: .7rem;
+      padding: 2px 10px; border-radius: 20px; font-weight: 600;
+    }
+    .topbar .search-box {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+      border-radius: 20px; padding: 5px 14px; min-width: 200px;
+    }
+    .topbar .search-box input {
+      background: transparent; border: none; outline: none;
+      color: #fff; font-size: .85rem; width: 100%;
+    }
+    .topbar .search-box input::placeholder { color: rgba(255,255,255,.45); }
+
+    /* ── Layout ── */
+    .layout {
+      display: flex;
+      margin-top: var(--header-h);
+      min-height: calc(100vh - var(--header-h));
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--ivory);
+      border-right: 1px solid var(--border);
+      position: fixed;
+      top: var(--header-h); bottom: 0;
+      overflow-y: auto;
+      padding: 20px 0;
+    }
+    .sidebar-section { margin-bottom: 4px; }
+    .sidebar-header {
+      font-size: .68rem; font-weight: 700; letter-spacing: 1.2px;
+      text-transform: uppercase; color: var(--leaf);
+      padding: 12px 20px 4px;
+    }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 9px;
+      padding: 7px 20px;
+      font-size: .85rem; color: #555; text-decoration: none;
+      border-left: 3px solid transparent;
+      transition: all .15s;
+      cursor: pointer;
+    }
+    .sidebar-link:hover { background: #F0EDE8; color: var(--charcoal); }
+    .sidebar-link.active {
+      border-left-color: var(--lemon);
+      background: rgba(245,230,66,.08);
+      color: var(--charcoal); font-weight: 600;
+    }
+    .sidebar-link .icon { width: 16px; text-align: center; opacity: .6; }
+    .sidebar-link.active .icon { opacity: 1; }
+
+    /* ── Main Content ── */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      padding: 36px 40px;
+      max-width: 960px;
+    }
+
+    /* ── Page / Section ── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ── Doc Card ── */
+    .doc-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px 36px;
+      margin-bottom: 28px;
+    }
+
+    /* ── Typography ── */
+    h1 { font-size: 1.75rem; font-weight: 800; margin-bottom: 6px; }
+    h2 { font-size: 1.25rem; font-weight: 700; margin: 28px 0 12px; color: var(--charcoal); }
+    h3 { font-size: 1rem; font-weight: 700; margin: 20px 0 8px; }
+    p  { line-height: 1.7; color: #444; margin-bottom: 10px; }
+    hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+    ul, ol { padding-left: 20px; color: #444; line-height: 1.8; }
+    li { margin-bottom: 4px; }
+
+    /* ── Page Header ── */
+    .page-header {
+      display: flex; align-items: flex-start; gap: 16px;
+      margin-bottom: 24px;
+    }
+    .page-header-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; flex-shrink: 0;
+    }
+    .page-header-icon.yellow { background: rgba(245,230,66,.25); }
+    .page-header-icon.green  { background: rgba(123,158,135,.2); }
+    .page-header-icon.blue   { background: rgba(100,149,237,.15); }
+    .page-header-icon.red    { background: rgba(220,80,80,.12); }
+    .page-header h1 { margin-bottom: 2px; }
+    .page-header .subtitle { color: #888; font-size: .85rem; }
+
+    /* ── Metadata Row ── */
+    .meta-row {
+      display: flex; flex-wrap: wrap; gap: 16px;
+      margin-bottom: 20px;
+    }
+    .meta-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: .78rem; color: #666;
+      background: #F5F3F0; border: 1px solid var(--border);
+      border-radius: 20px; padding: 3px 12px;
+    }
+
+    /* ── People Cards ── */
+    .people-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .person-card {
+      background: #FAFAFA;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 16px;
+      text-align: center;
+      transition: box-shadow .15s;
+    }
+    .person-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.09); }
+    .person-avatar {
+      width: 64px; height: 64px; border-radius: 50%;
+      margin: 0 auto 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1.1rem; color: #fff;
+    }
+    .person-name { font-weight: 700; font-size: .95rem; margin-bottom: 3px; }
+    .person-role { font-size: .78rem; color: var(--leaf); font-weight: 600; margin-bottom: 6px; }
+    .person-detail { font-size: .75rem; color: #888; line-height: 1.5; }
+    .person-tag {
+      display: inline-block; margin-top: 8px;
+      background: rgba(123,158,135,.12); color: var(--leaf);
+      border-radius: 20px; padding: 2px 10px; font-size: .7rem; font-weight: 600;
+    }
+
+    /* ── Meeting Entries ── */
+    .meeting-entry {
+      border-left: 3px solid var(--lemon);
+      padding-left: 16px;
+      margin-bottom: 28px;
+    }
+    .meeting-entry .meeting-title {
+      font-weight: 700; font-size: 1rem; margin-bottom: 4px;
+    }
+    .meeting-entry .meeting-meta {
+      font-size: .78rem; color: #888; margin-bottom: 10px;
+    }
+    .meeting-entry .attendees {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px;
+    }
+    .attendee-pill {
+      background: rgba(44,44,44,.07); border-radius: 20px;
+      padding: 2px 10px; font-size: .75rem; font-weight: 600;
+    }
+    .action-item {
+      display: flex; align-items: flex-start; gap: 8px;
+      padding: 6px 0; border-bottom: 1px solid #F0EDE8;
+      font-size: .85rem;
+    }
+    .action-item:last-child { border-bottom: none; }
+    .action-check {
+      width: 16px; height: 16px; border-radius: 4px;
+      border: 2px solid var(--border); cursor: pointer; flex-shrink: 0; margin-top: 1px;
+      appearance: none; -webkit-appearance: none; background: #fff;
+      transition: all .15s;
+    }
+    .action-check:checked {
+      background: var(--leaf); border-color: var(--leaf);
+    }
+    .action-owner { font-weight: 600; color: var(--charcoal); min-width: 80px; }
+    .action-due   { color: #999; font-size: .75rem; margin-left: auto; white-space: nowrap; }
+
+    /* ── Status Badge ── */
+    .status {
+      display: inline-flex; align-items: center; gap: 5px;
+      border-radius: 20px; padding: 2px 10px; font-size: .73rem; font-weight: 700;
+    }
+    .status.done     { background: rgba(123,158,135,.15); color: var(--leaf); }
+    .status.wip      { background: rgba(245,230,66,.3);   color: #A89B00; }
+    .status.blocked  { background: rgba(220,80,80,.12);   color: #C04040; }
+    .status.todo     { background: #F0EDE8;               color: #888; }
+    .status::before  { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+    /* ── Summary Cards ── */
+    .summary-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    @media (max-width: 680px) { .summary-grid { grid-template-columns: 1fr; } }
+
+    .summary-block {
+      background: #FAFAFA; border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 20px;
+    }
+    .summary-block h3 { font-size: .9rem; margin: 0 0 8px; }
+
+    /* ── KPI Row ── */
+    .kpi-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0; }
+    .kpi {
+      flex: 1; min-width: 100px;
+      background: #fff; border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px 20px; text-align: center;
+    }
+    .kpi .kpi-val { font-size: 1.6rem; font-weight: 800; color: var(--charcoal); }
+    .kpi .kpi-label { font-size: .72rem; color: #888; margin-top: 2px; }
+
+    /* ── Table ── */
+    table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+    thead th {
+      background: #F5F3F0; text-align: left;
+      padding: 9px 12px; font-size: .73rem; text-transform: uppercase;
+      letter-spacing: .8px; color: #888; border-bottom: 1px solid var(--border);
+    }
+    tbody tr { border-bottom: 1px solid var(--border); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody td { padding: 10px 12px; vertical-align: middle; }
+    tbody tr:hover { background: #FAFAFA; }
+
+    /* ── New Item Form ── */
+    .add-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--charcoal); color: #fff;
+      border: none; border-radius: var(--radius);
+      padding: 9px 18px; font-size: .85rem; font-weight: 600;
+      cursor: pointer; transition: opacity .15s; margin-top: 16px;
+    }
+    .add-btn:hover { opacity: .85; }
+    .add-btn.secondary {
+      background: transparent; color: var(--charcoal);
+      border: 1.5px solid var(--border);
+    }
+
+    .form-row {
+      display: none; background: #FAFAFA; border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px; margin-top: 12px;
+    }
+    .form-row.open { display: block; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+    .form-group label { font-size: .75rem; font-weight: 600; color: #666; }
+    .form-group input, .form-group select, .form-group textarea {
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 8px 11px; font-size: .85rem; font-family: inherit;
+      outline: none; background: #fff;
+      transition: border-color .15s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--leaf);
+    }
+    .form-actions { display: flex; gap: 8px; margin-top: 16px; }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #D0CBC4; border-radius: 3px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 720px) {
+      .sidebar { transform: translateX(-100%); transition: transform .25s; z-index: 50; }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; padding: 20px 16px; }
+    }
+
+    /* ── Highlight ── */
+    .highlight { background: rgba(245,230,66,.35); border-radius: 3px; padding: 0 2px; }
+
+    /* ── Timeline dot ── */
+    .tl { display: flex; gap: 14px; margin-bottom: 20px; }
+    .tl-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--leaf); margin-top: 6px; flex-shrink: 0; }
+    .tl-content { flex: 1; }
+    .tl-date { font-size: .73rem; color: #999; margin-bottom: 3px; }
+    .tl-text { font-size: .88rem; color: #444; }
+
+    /* ── Print ── */
+    @media print {
+      .topbar, .sidebar { display: none; }
+      .main { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ TOP BAR ═══════════════════════════ -->
+<header class="topbar">
+  <a class="logo" href="../index.html">
+    <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="28" height="28" rx="6" fill="#F5E642"/>
+      <text x="5" y="20" font-family="sans-serif" font-weight="900" font-size="16" fill="#2C2C2C">L</text>
+    </svg>
+    Limo Studio
+  </a>
+  <span class="doc-title">Internal Docs</span>
+  <span class="badge">Private</span>
+  <div class="search-box">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" placeholder="Search docs…" id="searchInput" oninput="searchDocs(this.value)" />
+  </div>
+</header>
+
+<!-- ═══════════════════════════ LAYOUT ═══════════════════════════ -->
+<div class="layout">
+
+  <!-- ── SIDEBAR ── -->
+  <nav class="sidebar" id="sidebar">
+
+    <div class="sidebar-section">
+      <div class="sidebar-header">Overview</div>
+      <a class="sidebar-link active" onclick="showPage('home')" id="link-home">
+        <span class="icon">🏠</span> Home
+      </a>
+      <a class="sidebar-link" onclick="showPage('team')" id="link-team">
+        <span class="icon">👥</span> Team Directory
+      </a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-header">Meetings</div>
+      <a class="sidebar-link" onclick="showPage('meetings')" id="link-meetings">
+        <span class="icon">📅</span> All Meetings
+      </a>
+      <a class="sidebar-link" onclick="showPage('actions')" id="link-actions">
+        <span class="icon">✅</span> Action Items
+      </a>
+      <a class="sidebar-link" onclick="showPage('decisions')" id="link-decisions">
+        <span class="icon">⚖️</span> Decisions Log
+      </a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-header">Projects</div>
+      <a class="sidebar-link" onclick="showPage('projects')" id="link-projects">
+        <span class="icon">🗂️</span> Projects
+      </a>
+      <a class="sidebar-link" onclick="showPage('summaries')" id="link-summaries">
+        <span class="icon">📝</span> Summaries
+      </a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-header">Company</div>
+      <a class="sidebar-link" onclick="showPage('culture')" id="link-culture">
+        <span class="icon">🌿</span> Culture & Values
+      </a>
+      <a class="sidebar-link" onclick="showPage('changelog')" id="link-changelog">
+        <span class="icon">📋</span> Changelog
+      </a>
+    </div>
+
+  </nav>
+
+  <!-- ── MAIN ── -->
+  <main class="main">
+
+    <!-- ════════════════ HOME ════════════════ -->
+    <section class="page active" id="page-home">
+
+      <div class="page-header">
+        <div class="page-header-icon yellow">🏠</div>
+        <div>
+          <h1>Limo Studio — Internal Hub</h1>
+          <p class="subtitle">Single source of truth for everything at Limo.</p>
+        </div>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi"><div class="kpi-val">7</div><div class="kpi-label">Team Members</div></div>
+        <div class="kpi"><div class="kpi-val" id="kpi-meetings">3</div><div class="kpi-label">Meetings Logged</div></div>
+        <div class="kpi"><div class="kpi-val" id="kpi-open">5</div><div class="kpi-label">Open Actions</div></div>
+        <div class="kpi"><div class="kpi-val" id="kpi-projects">2</div><div class="kpi-label">Active Projects</div></div>
+      </div>
+
+      <div class="doc-card">
+        <h2>📌 Quick Links</h2>
+        <p>Jump to the most-used sections:</p>
+        <ul style="margin-top:10px; line-height:2;">
+          <li><a href="#" onclick="showPage('meetings')">→ Log a new meeting</a></li>
+          <li><a href="#" onclick="showPage('team')">→ View team directory</a></li>
+          <li><a href="#" onclick="showPage('actions')">→ Check open action items</a></li>
+          <li><a href="#" onclick="showPage('summaries')">→ Read project summaries</a></li>
+          <li><a href="#" onclick="showPage('culture')">→ Limo culture &amp; values</a></li>
+        </ul>
+      </div>
+
+      <div class="doc-card">
+        <h2>🕐 Recent Activity</h2>
+        <div class="tl">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-date">Sep 21, 2026</div>
+            <div class="tl-text">Internal Docs Hub created for Limo Studio.</div>
+          </div>
+        </div>
+        <div class="tl">
+          <div class="tl-dot" style="background:var(--lemon);"></div>
+          <div class="tl-content">
+            <div class="tl-date">Sep 21, 2026</div>
+            <div class="tl-text">Team directory populated with all 7 members.</div>
+          </div>
+        </div>
+        <div class="tl">
+          <div class="tl-dot" style="background:#ccc;"></div>
+          <div class="tl-content">
+            <div class="tl-date">—</div>
+            <div class="tl-text">Add your first meeting record below ↓</div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ════════════════ TEAM ════════════════ -->
+    <section class="page" id="page-team">
+
+      <div class="page-header">
+        <div class="page-header-icon green">👥</div>
+        <div>
+          <h1>Team Directory</h1>
+          <p class="subtitle">7 members · Italy &amp; Global</p>
+        </div>
+      </div>
+
+      <div class="doc-card">
+        <div class="people-grid" id="peopleGrid">
+
+          <div class="person-card">
+            <div class="person-avatar" style="background:#2C2C2C;">MR</div>
+            <div class="person-name">Mojtaba Roshana</div>
+            <div class="person-role">Studio Director</div>
+            <div class="person-detail">Strategy, Vision, Client Relations</div>
+            <span class="person-tag">Founder</span>
+          </div>
+
+          <div class="person-card">
+            <div class="person-avatar" style="background:#7B9E87;">AA</div>
+            <div class="person-name">Amin A.</div>
+            <div class="person-role">Lead Developer</div>
+            <div class="person-detail">Full-stack, Architecture</div>
+            <span class="person-tag">Tech</span>
+          </div>
+
+          <div class="person-card">
+            <div class="person-avatar" style="background:#5B7FA6;">RK</div>
+            <div class="person-name">Ramtin K.</div>
+            <div class="person-role">Designer</div>
+            <div class="person-detail">UI/UX, Brand, Motion</div>
+            <span class="person-tag">Design</span>
+          </div>
+
+          <div class="person-card">
+            <div class="person-avatar" style="background:#B07DBF;">PF</div>
+            <div class="person-name">Parisa F.</div>
+            <div class="person-role">Project Manager</div>
+            <div class="person-detail">Delivery, Timelines, Clients</div>
+            <span class="person-tag">Ops</span>
+          </div>
+
+          <div class="person-card">
+            <div class="person-avatar" style="background:#C07070;">RJ</div>
+            <div class="person-name">Roya J.</div>
+            <div class="person-role">Marketing Lead</div>
+            <div class="person-detail">Content, Social, Growth</div>
+            <span class="person-tag">Marketing</span>
+          </div>
+
+          <div class="person-card">
+            <div class="person-avatar" style="background:#D4924A;">TE</div>
+            <div class="person-name">Taha E.</div>
+            <div class="person-role">Backend Engineer</div>
+            <div class="person-detail">APIs, Databases, DevOps</div>
+            <span class="person-tag">Tech</span>
+          </div>
+
+          <div class="person-card">
+            <div class="person-avatar" style="background:#4DA8A4;">MY</div>
+            <div class="person-name">Maryam Y.</div>
+            <div class="person-role">Frontend Engineer</div>
+            <div class="person-detail">React, Accessibility, Perf</div>
+            <span class="person-tag">Tech</span>
+          </div>
+
+        </div>
+
+        <button class="add-btn secondary" style="margin-top:24px;" onclick="toggleForm('addPersonForm')">+ Add Team Member</button>
+
+        <div class="form-row" id="addPersonForm">
+          <h3 style="margin-top:0; margin-bottom:16px;">New Team Member</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" placeholder="e.g. Sara Rossi" />
+            </div>
+            <div class="form-group">
+              <label>Role / Title</label>
+              <input type="text" placeholder="e.g. UX Researcher" />
+            </div>
+            <div class="form-group">
+              <label>Initials</label>
+              <input type="text" maxlength="2" placeholder="SR" />
+            </div>
+            <div class="form-group">
+              <label>Department</label>
+              <select>
+                <option>Tech</option>
+                <option>Design</option>
+                <option>Ops</option>
+                <option>Marketing</option>
+                <option>Founder</option>
+              </select>
+            </div>
+            <div class="form-group" style="grid-column:1/-1;">
+              <label>Responsibilities</label>
+              <input type="text" placeholder="Short description of what this person does" />
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="add-btn" onclick="addPerson()">Save Member</button>
+            <button class="add-btn secondary" onclick="toggleForm('addPersonForm')">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ════════════════ MEETINGS ════════════════ -->
+    <section class="page" id="page-meetings">
+
+      <div class="page-header">
+        <div class="page-header-icon blue">📅</div>
+        <div>
+          <h1>Meeting Log</h1>
+          <p class="subtitle">All team meetings, notes, and decisions.</p>
+        </div>
+      </div>
+
+      <div class="doc-card" id="meetingList">
+
+        <!-- ── Meeting 1 ── -->
+        <div class="meeting-entry">
+          <div class="meeting-title">🟡 Weekly Sync — Week 38</div>
+          <div class="meeting-meta">📅 Mon Sep 21, 2026 · 10:00–10:45 · Video Call · Facilitator: Parisa F.</div>
+          <div class="attendees">
+            <span class="attendee-pill">MR</span><span class="attendee-pill">AA</span>
+            <span class="attendee-pill">PF</span><span class="attendee-pill">RK</span>
+            <span class="attendee-pill">TE</span><span class="attendee-pill">MY</span>
+          </div>
+          <h3 style="margin-top:10px;">Agenda &amp; Notes</h3>
+          <ul>
+            <li>Website launch update — dev sign-off needed by Wednesday.</li>
+            <li>Client X onboarding plan reviewed; proposal sent on Friday.</li>
+            <li>Marketing Q4 budget discussion deferred to Thursday session.</li>
+          </ul>
+          <h3>Action Items</h3>
+          <div class="action-item">
+            <input type="checkbox" class="action-check" />
+            <span class="action-owner">Amin</span>
+            <span>Final QA pass on homepage — mobile breakpoints.</span>
+            <span class="action-due">Due Sep 23</span>
+          </div>
+          <div class="action-item">
+            <input type="checkbox" class="action-check" />
+            <span class="action-owner">Maryam</span>
+            <span>Fix RTL layout issue on contact section.</span>
+            <span class="action-due">Due Sep 22</span>
+          </div>
+          <div class="action-item">
+            <input type="checkbox" class="action-check" />
+            <span class="action-owner">Parisa</span>
+            <span>Send revised timeline to Client X.</span>
+            <span class="action-due">Due Sep 22</span>
+          </div>
+        </div>
+
+        <hr />
+
+        <!-- ── Meeting 2 ── -->
+        <div class="meeting-entry">
+          <div class="meeting-title">🟢 Design Review — v2 Prototype</div>
+          <div class="meeting-meta">📅 Fri Sep 18, 2026 · 14:00–15:00 · In-Person · Facilitator: Ramtin K.</div>
+          <div class="attendees">
+            <span class="attendee-pill">MR</span><span class="attendee-pill">RK</span>
+            <span class="attendee-pill">MY</span><span class="attendee-pill">PF</span>
+          </div>
+          <h3 style="margin-top:10px;">Notes</h3>
+          <ul>
+            <li>New hero section animation approved by director.</li>
+            <li>Typography scale updated: base 15px, heading 800 weight.</li>
+            <li>Color palette locked — no more changes before launch.</li>
+          </ul>
+          <h3>Decision Made</h3>
+          <p>✅ <strong>Lemon yellow (#F5E642)</strong> confirmed as primary accent. Muted leaf-green (#7B9E87) as secondary.</p>
+        </div>
+
+        <hr />
+
+        <!-- ── Meeting 3 ── -->
+        <div class="meeting-entry">
+          <div class="meeting-title">🔵 Strategy Session — Q4 Planning</div>
+          <div class="meeting-meta">📅 Thu Sep 17, 2026 · 11:00–12:30 · Video Call · Facilitator: Mojtaba R.</div>
+          <div class="attendees">
+            <span class="attendee-pill">MR</span><span class="attendee-pill">PF</span><span class="attendee-pill">RJ</span>
+          </div>
+          <h3 style="margin-top:10px;">Notes</h3>
+          <ul>
+            <li>Two new client prospects identified from LinkedIn outreach.</li>
+            <li>Goal: close 1 new contract before end of October.</li>
+            <li>Roya to run LinkedIn ad test in October with €500 budget.</li>
+          </ul>
+          <h3>Action Items</h3>
+          <div class="action-item">
+            <input type="checkbox" class="action-check" />
+            <span class="action-owner">Roya</span>
+            <span>Prepare LinkedIn ad copy &amp; targeting for review.</span>
+            <span class="action-due">Due Sep 30</span>
+          </div>
+          <div class="action-item">
+            <input type="checkbox" class="action-check" />
+            <span class="action-owner">Mojtaba</span>
+            <span>Follow up with Prospect A — second call.</span>
+            <span class="action-due">Due Sep 25</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ADD MEETING FORM -->
+      <button class="add-btn" onclick="toggleForm('addMeetingForm')">+ Log New Meeting</button>
+
+      <div class="form-row" id="addMeetingForm">
+        <h3 style="margin-top:0;margin-bottom:16px;">New Meeting Record</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Meeting Title</label>
+            <input type="text" id="mTitle" placeholder="e.g. Weekly Sync — Week 39" />
+          </div>
+          <div class="form-group">
+            <label>Date &amp; Time</label>
+            <input type="datetime-local" id="mDate" />
+          </div>
+          <div class="form-group">
+            <label>Facilitator</label>
+            <input type="text" id="mFacilitator" placeholder="e.g. Parisa F." />
+          </div>
+          <div class="form-group">
+            <label>Format</label>
+            <select id="mFormat">
+              <option>Video Call</option>
+              <option>In-Person</option>
+              <option>Async</option>
+              <option>Hybrid</option>
+            </select>
+          </div>
+          <div class="form-group" style="grid-column:1/-1;">
+            <label>Attendees (comma-separated initials)</label>
+            <input type="text" id="mAttendees" placeholder="MR, AA, PF, RK" />
+          </div>
+          <div class="form-group" style="grid-column:1/-1;">
+            <label>Meeting Notes / Agenda</label>
+            <textarea id="mNotes" rows="4" placeholder="Key discussion points, decisions made…"></textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="add-btn" onclick="addMeeting()">Save Meeting</button>
+          <button class="add-btn secondary" onclick="toggleForm('addMeetingForm')">Cancel</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ════════════════ ACTION ITEMS ════════════════ -->
+    <section class="page" id="page-actions">
+
+      <div class="page-header">
+        <div class="page-header-icon yellow">✅</div>
+        <div>
+          <h1>Action Items</h1>
+          <p class="subtitle">All outstanding tasks across meetings.</p>
+        </div>
+      </div>
+
+      <div class="doc-card">
+        <table>
+          <thead>
+            <tr>
+              <th>Done</th>
+              <th>Task</th>
+              <th>Owner</th>
+              <th>Source</th>
+              <th>Due</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="actionsTable">
+            <tr>
+              <td><input type="checkbox" class="action-check" /></td>
+              <td>Final QA — mobile breakpoints</td>
+              <td><strong>Amin</strong></td>
+              <td>Weekly Sync W38</td>
+              <td>Sep 23</td>
+              <td><span class="status wip">In Progress</span></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="action-check" /></td>
+              <td>Fix RTL issue on contact section</td>
+              <td><strong>Maryam</strong></td>
+              <td>Weekly Sync W38</td>
+              <td>Sep 22</td>
+              <td><span class="status todo">To Do</span></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="action-check" /></td>
+              <td>Send revised timeline to Client X</td>
+              <td><strong>Parisa</strong></td>
+              <td>Weekly Sync W38</td>
+              <td>Sep 22</td>
+              <td><span class="status todo">To Do</span></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="action-check" /></td>
+              <td>LinkedIn ad copy &amp; targeting</td>
+              <td><strong>Roya</strong></td>
+              <td>Q4 Strategy</td>
+              <td>Sep 30</td>
+              <td><span class="status todo">To Do</span></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="action-check" /></td>
+              <td>Follow up with Prospect A</td>
+              <td><strong>Mojtaba</strong></td>
+              <td>Q4 Strategy</td>
+              <td>Sep 25</td>
+              <td><span class="status todo">To Do</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="add-btn secondary" style="margin-top:16px;" onclick="toggleForm('addActionForm')">+ Add Action Item</button>
+        <div class="form-row" id="addActionForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Task Description</label>
+              <input type="text" id="aTask" placeholder="What needs to be done?" />
+            </div>
+            <div class="form-group">
+              <label>Owner</label>
+              <input type="text" id="aOwner" placeholder="e.g. Amin" />
+            </div>
+            <div class="form-group">
+              <label>Due Date</label>
+              <input type="date" id="aDue" />
+            </div>
+            <div class="form-group">
+              <label>Source Meeting</label>
+              <input type="text" id="aSource" placeholder="e.g. Weekly Sync W39" />
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="add-btn" onclick="addAction()">Save</button>
+            <button class="add-btn secondary" onclick="toggleForm('addActionForm')">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ════════════════ DECISIONS ════════════════ -->
+    <section class="page" id="page-decisions">
+
+      <div class="page-header">
+        <div class="page-header-icon blue">⚖️</div>
+        <div>
+          <h1>Decisions Log</h1>
+          <p class="subtitle">Key decisions made — who, when, and why.</p>
+        </div>
+      </div>
+
+      <div class="doc-card">
+        <table>
+          <thead>
+            <tr><th>#</th><th>Decision</th><th>Made By</th><th>Date</th><th>Context</th></tr>
+          </thead>
+          <tbody id="decisionsTable">
+            <tr>
+              <td style="color:#999;">#1</td>
+              <td>Lemon yellow (#F5E642) confirmed as primary accent color</td>
+              <td>Mojtaba, Ramtin</td>
+              <td>Sep 18</td>
+              <td>Design Review v2</td>
+            </tr>
+            <tr>
+              <td style="color:#999;">#2</td>
+              <td>Marketing Q4 budget: €500 LinkedIn ad test in October</td>
+              <td>Mojtaba, Roya</td>
+              <td>Sep 17</td>
+              <td>Q4 Strategy</td>
+            </tr>
+            <tr>
+              <td style="color:#999;">#3</td>
+              <td>Color palette locked before launch — no more changes</td>
+              <td>Team</td>
+              <td>Sep 18</td>
+              <td>Design Review v2</td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="add-btn secondary" style="margin-top:16px;" onclick="toggleForm('addDecisionForm')">+ Log Decision</button>
+        <div class="form-row" id="addDecisionForm">
+          <div class="form-grid">
+            <div class="form-group" style="grid-column:1/-1;">
+              <label>Decision</label>
+              <input type="text" id="dDecision" placeholder="What was decided?" />
+            </div>
+            <div class="form-group">
+              <label>Made By</label>
+              <input type="text" id="dBy" placeholder="e.g. Mojtaba, Amin" />
+            </div>
+            <div class="form-group">
+              <label>Date</label>
+              <input type="date" id="dDate" />
+            </div>
+            <div class="form-group" style="grid-column:1/-1;">
+              <label>Context / Source</label>
+              <input type="text" id="dContext" placeholder="Which meeting or discussion?" />
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="add-btn" onclick="addDecision()">Save Decision</button>
+            <button class="add-btn secondary" onclick="toggleForm('addDecisionForm')">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ════════════════ PROJECTS ════════════════ -->
+    <section class="page" id="page-projects">
+
+      <div class="page-header">
+        <div class="page-header-icon green">🗂️</div>
+        <div>
+          <h1>Projects</h1>
+          <p class="subtitle">Active and past Limo projects.</p>
+        </div>
+      </div>
+
+      <div class="doc-card">
+        <table>
+          <thead>
+            <tr><th>Project</th><th>Lead</th><th>Client</th><th>Start</th><th>Deadline</th><th>Status</th></tr>
+          </thead>
+          <tbody id="projectsTable">
+            <tr>
+              <td><strong>Limo Studio Website</strong></td>
+              <td>Ramtin + Amin</td>
+              <td>Internal</td>
+              <td>Aug 2026</td>
+              <td>Sep 25, 2026</td>
+              <td><span class="status wip">In Progress</span></td>
+            </tr>
+            <tr>
+              <td><strong>Client X — Brand Identity</strong></td>
+              <td>Ramtin</td>
+              <td>Client X</td>
+              <td>Sep 2026</td>
+              <td>Nov 1, 2026</td>
+              <td><span class="status todo">To Start</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="add-btn secondary" style="margin-top:16px;" onclick="toggleForm('addProjectForm')">+ New Project</button>
+        <div class="form-row" id="addProjectForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Project Name</label>
+              <input type="text" id="pName" placeholder="e.g. Client Y — Web App" />
+            </div>
+            <div class="form-group">
+              <label>Lead(s)</label>
+              <input type="text" id="pLead" placeholder="e.g. Amin + Taha" />
+            </div>
+            <div class="form-group">
+              <label>Client</label>
+              <input type="text" id="pClient" placeholder="Client name or Internal" />
+            </div>
+            <div class="form-group">
+              <label>Deadline</label>
+              <input type="date" id="pDeadline" />
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="add-btn" onclick="addProject()">Save Project</button>
+            <button class="add-btn secondary" onclick="toggleForm('addProjectForm')">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ════════════════ SUMMARIES ════════════════ -->
+    <section class="page" id="page-summaries">
+
+      <div class="page-header">
+        <div class="page-header-icon yellow">📝</div>
+        <div>
+          <h1>Summaries</h1>
+          <p class="subtitle">Weekly &amp; project summaries — what happened, what's next.</p>
+        </div>
+      </div>
+
+      <div class="doc-card">
+        <h2>📆 Week 38 Summary — Sep 15–21, 2026</h2>
+        <div class="meta-row">
+          <span class="meta-chip">📅 Sep 21, 2026</span>
+          <span class="meta-chip">✍️ Mojtaba R.</span>
+          <span class="meta-chip">🔖 Weekly</span>
+        </div>
+
+        <div class="summary-grid">
+          <div class="summary-block">
+            <h3>✅ What We Did</h3>
+            <ul>
+              <li>Locked final design palette for studio website.</li>
+              <li>Completed multilingual (4 languages) implementation.</li>
+              <li>Sent initial proposal to Client X.</li>
+              <li>Set up Limo's LinkedIn company page.</li>
+            </ul>
+          </div>
+          <div class="summary-block">
+            <h3>⚠️ Blockers</h3>
+            <ul>
+              <li>Awaiting domain registration confirmation.</li>
+              <li>Client X has not signed NDA yet.</li>
+            </ul>
+          </div>
+          <div class="summary-block">
+            <h3>📌 Next Week Goals</h3>
+            <ul>
+              <li>Launch studio website on GitHub Pages.</li>
+              <li>Close client X first call outcome.</li>
+              <li>Finalize Q4 marketing plan.</li>
+            </ul>
+          </div>
+          <div class="summary-block">
+            <h3>💡 Wins</h3>
+            <ul>
+              <li>Full RTL Persian support shipped 🎉</li>
+              <li>Team aligned on brand identity — no more debates.</li>
+              <li>Two warm leads from LinkedIn outreach.</li>
+            </ul>
+          </div>
+        </div>
+
+        <button class="add-btn secondary" style="margin-top:24px;" onclick="toggleForm('addSummaryForm')">+ Add Weekly Summary</button>
+
+        <div class="form-row" id="addSummaryForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Week / Period</label>
+              <input type="text" id="sWeek" placeholder="e.g. Week 39 — Sep 22–28" />
+            </div>
+            <div class="form-group">
+              <label>Written By</label>
+              <input type="text" id="sAuthor" placeholder="e.g. Mojtaba R." />
+            </div>
+            <div class="form-group" style="grid-column:1/-1;">
+              <label>What We Did</label>
+              <textarea id="sDid" rows="3" placeholder="Key accomplishments this week…"></textarea>
+            </div>
+            <div class="form-group" style="grid-column:1/-1;">
+              <label>Blockers</label>
+              <textarea id="sBlockers" rows="2" placeholder="What slowed us down?"></textarea>
+            </div>
+            <div class="form-group" style="grid-column:1/-1;">
+              <label>Next Week Goals</label>
+              <textarea id="sGoals" rows="3" placeholder="What do we aim to finish?"></textarea>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="add-btn" onclick="addSummary()">Save Summary</button>
+            <button class="add-btn secondary" onclick="toggleForm('addSummaryForm')">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ════════════════ CULTURE ════════════════ -->
+    <section class="page" id="page-culture">
+
+      <div class="page-header">
+        <div class="page-header-icon green">🌿</div>
+        <div>
+          <h1>Culture &amp; Values</h1>
+          <p class="subtitle">What Limo stands for.</p>
+        </div>
+      </div>
+
+      <div class="doc-card">
+        <h2>Our Principles</h2>
+        <ul style="line-height:2.2;">
+          <li><strong>🎯 Craft over speed</strong> — We take time to build things properly.</li>
+          <li><strong>🤝 Radical transparency</strong> — Everyone knows what's happening and why.</li>
+          <li><strong>🌍 Global by default</strong> — We design for all languages, cultures, and contexts.</li>
+          <li><strong>🌱 Sustainable pace</strong> — No burnout. Sustainable work brings lasting results.</li>
+          <li><strong>💬 Async first</strong> — We document before we call. Meetings have a purpose.</li>
+        </ul>
+        <hr />
+        <h2>Working Norms</h2>
+        <ul style="line-height:2.2;">
+          <li>All decisions get logged in the <a href="#" onclick="showPage('decisions')">Decisions Log</a>.</li>
+          <li>Every meeting needs an agenda shared 24h in advance.</li>
+          <li>Action items must have an owner and a due date.</li>
+          <li>Weekly summaries are written every Sunday by the director.</li>
+          <li>Feedback is given kindly, directly, and in private first.</li>
+        </ul>
+      </div>
+
+    </section>
+
+    <!-- ════════════════ CHANGELOG ════════════════ -->
+    <section class="page" id="page-changelog">
+
+      <div class="page-header">
+        <div class="page-header-icon red">📋</div>
+        <div>
+          <h1>Docs Changelog</h1>
+          <p class="subtitle">History of changes to this documentation hub.</p>
+        </div>
+      </div>
+
+      <div class="doc-card">
+        <div class="tl">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-date">v1.0.0 — Sep 21, 2026</div>
+            <div class="tl-text">🎉 Initial launch. Created by Mojtaba R. Includes: Home, Team Directory, Meeting Log, Action Items, Decisions Log, Projects, Summaries, Culture &amp; Values.</div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+</div>
+
+<!-- ═══════════════════════════ SCRIPT ═══════════════════════════ -->
+<script>
+  // ── Page Navigation ──
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.getElementById('link-' + id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Toggle Form ──
+  function toggleForm(id) {
+    const f = document.getElementById(id);
+    f.classList.toggle('open');
+  }
+
+  // ── Add Meeting ──
+  function addMeeting() {
+    const title       = document.getElementById('mTitle').value.trim();
+    const date        = document.getElementById('mDate').value;
+    const facilitator = document.getElementById('mFacilitator').value.trim();
+    const format      = document.getElementById('mFormat').value;
+    const attendees   = document.getElementById('mAttendees').value.trim();
+    const notes       = document.getElementById('mNotes').value.trim();
+    if (!title) { alert('Please enter a meeting title.'); return; }
+
+    const pills = attendees ? attendees.split(',').map(a =>
+      `<span class="attendee-pill">${a.trim()}</span>`).join('') : '';
+
+    const entry = document.createElement('div');
+    entry.innerHTML = `
+      <hr/>
+      <div class="meeting-entry">
+        <div class="meeting-title">🔵 ${title}</div>
+        <div class="meeting-meta">📅 ${date} · ${format} · Facilitator: ${facilitator}</div>
+        <div class="attendees">${pills}</div>
+        <h3 style="margin-top:10px;">Notes</h3>
+        <p>${notes.replace(/\n/g, '<br>')}</p>
+      </div>`;
+    document.getElementById('meetingList').appendChild(entry);
+
+    // Clear
+    ['mTitle','mDate','mFacilitator','mAttendees','mNotes'].forEach(id => document.getElementById(id).value = '');
+    toggleForm('addMeetingForm');
+
+    // Update KPI
+    const kpi = document.getElementById('kpi-meetings');
+    kpi.textContent = parseInt(kpi.textContent) + 1;
+  }
+
+  // ── Add Action ──
+  function addAction() {
+    const task   = document.getElementById('aTask').value.trim();
+    const owner  = document.getElementById('aOwner').value.trim();
+    const due    = document.getElementById('aDue').value;
+    const source = document.getElementById('aSource').value.trim();
+    if (!task) { alert('Please enter a task.'); return; }
+
+    const tbody = document.getElementById('actionsTable');
+    const row   = tbody.insertRow();
+    row.innerHTML = `
+      <td><input type="checkbox" class="action-check"/></td>
+      <td>${task}</td>
+      <td><strong>${owner}</strong></td>
+      <td>${source}</td>
+      <td>${due}</td>
+      <td><span class="status todo">To Do</span></td>`;
+    ['aTask','aOwner','aDue','aSource'].forEach(id => document.getElementById(id).value = '');
+    toggleForm('addActionForm');
+
+    const kpi = document.getElementById('kpi-open');
+    kpi.textContent = parseInt(kpi.textContent) + 1;
+  }
+
+  // ── Add Decision ──
+  function addDecision() {
+    const decision = document.getElementById('dDecision').value.trim();
+    const by       = document.getElementById('dBy').value.trim();
+    const date     = document.getElementById('dDate').value;
+    const ctx      = document.getElementById('dContext').value.trim();
+    if (!decision) { alert('Please enter a decision.'); return; }
+
+    const tbody = document.getElementById('decisionsTable');
+    const num   = tbody.rows.length + 1;
+    const row   = tbody.insertRow();
+    row.innerHTML = `
+      <td style="color:#999;">#${num}</td>
+      <td>${decision}</td>
+      <td>${by}</td>
+      <td>${date}</td>
+      <td>${ctx}</td>`;
+    ['dDecision','dBy','dDate','dContext'].forEach(id => document.getElementById(id).value = '');
+    toggleForm('addDecisionForm');
+  }
+
+  // ── Add Project ──
+  function addProject() {
+    const name     = document.getElementById('pName').value.trim();
+    const lead     = document.getElementById('pLead').value.trim();
+    const client   = document.getElementById('pClient').value.trim();
+    const deadline = document.getElementById('pDeadline').value;
+    if (!name) { alert('Please enter a project name.'); return; }
+
+    const tbody = document.getElementById('projectsTable');
+    const row   = tbody.insertRow();
+    row.innerHTML = `
+      <td><strong>${name}</strong></td>
+      <td>${lead}</td>
+      <td>${client}</td>
+      <td>${new Date().toLocaleDateString('en-US',{month:'short',year:'numeric'})}</td>
+      <td>${deadline}</td>
+      <td><span class="status todo">To Start</span></td>`;
+    ['pName','pLead','pClient','pDeadline'].forEach(id => document.getElementById(id).value = '');
+    toggleForm('addProjectForm');
+
+    const kpi = document.getElementById('kpi-projects');
+    kpi.textContent = parseInt(kpi.textContent) + 1;
+  }
+
+  // ── Add Person ──
+  const COLORS = ['#2C2C2C','#7B9E87','#5B7FA6','#B07DBF','#C07070','#D4924A','#4DA8A4','#6B5B95'];
+  let colorIdx = COLORS.length;
+  function addPerson() {
+    const form = document.getElementById('addPersonForm');
+    const inputs = form.querySelectorAll('input, select');
+    const name   = inputs[0].value.trim();
+    const role   = inputs[1].value.trim();
+    const init   = (inputs[2].value.trim() || name.substring(0,2)).toUpperCase();
+    const dept   = inputs[3].value;
+    const resp   = inputs[4].value.trim();
+    if (!name) { alert('Please enter a name.'); return; }
+
+    const color = COLORS[colorIdx++ % COLORS.length];
+    const card  = document.createElement('div');
+    card.className = 'person-card';
+    card.innerHTML = `
+      <div class="person-avatar" style="background:${color};">${init}</div>
+      <div class="person-name">${name}</div>
+      <div class="person-role">${role}</div>
+      <div class="person-detail">${resp}</div>
+      <span class="person-tag">${dept}</span>`;
+    document.getElementById('peopleGrid').appendChild(card);
+    inputs.forEach(i => i.tagName === 'INPUT' ? (i.value = '') : null);
+    toggleForm('addPersonForm');
+  }
+
+  // ── Add Summary (simple toast) ──
+  function addSummary() {
+    const week    = document.getElementById('sWeek').value.trim();
+    const author  = document.getElementById('sAuthor').value.trim();
+    const did     = document.getElementById('sDid').value.trim();
+    const block   = document.getElementById('sBlockers').value.trim();
+    const goals   = document.getElementById('sGoals').value.trim();
+    if (!week) { alert('Please enter a week/period.'); return; }
+
+    const container = document.querySelector('#page-summaries .doc-card');
+    const el = document.createElement('div');
+    el.style.marginTop = '24px';
+    el.innerHTML = `
+      <hr/>
+      <h2>📆 ${week}</h2>
+      <div class="meta-row">
+        <span class="meta-chip">✍️ ${author}</span>
+        <span class="meta-chip">🔖 Weekly</span>
+      </div>
+      <div class="summary-grid">
+        <div class="summary-block"><h3>✅ What We Did</h3><p>${did.replace(/\n/g,'<br>')}</p></div>
+        <div class="summary-block"><h3>⚠️ Blockers</h3><p>${block.replace(/\n/g,'<br>')}</p></div>
+        <div class="summary-block"><h3>📌 Next Week Goals</h3><p>${goals.replace(/\n/g,'<br>')}</p></div>
+      </div>`;
+    container.insertBefore(el, container.querySelector('.add-btn.secondary'));
+
+    ['sWeek','sAuthor','sDid','sBlockers','sGoals'].forEach(id => document.getElementById(id).value = '');
+    toggleForm('addSummaryForm');
+  }
+
+  // ── Simple search highlight ──
+  function searchDocs(val) {
+    if (!val) return;
+    // Basic: navigate to meetings if searching for meeting-related keywords
+  }
+</script>
+
+</body>
+</html>

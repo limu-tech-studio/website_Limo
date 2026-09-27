@@ -1,6 +1,6 @@
-# Limo — Technology Studio Website
+# Limu — Technology Studio Website
 
-A lightweight, high-performance, single-page website for **Limo**, a seven-person technology studio based in Italy and working globally.
+A lightweight, high-performance, single-page website for **Limu**, a seven-person technology studio based in Italy and working globally.
 
 ## Features & Highlights
 
@@ -106,4 +106,4 @@ website_Limo/
 
 ## License & Attribution
 
-Designed and engineered for **Limo Studio** (Italy & Global). All rights reserved.
+Designed and engineered for **Limu Studio** (Italy & Global). All rights reserved.

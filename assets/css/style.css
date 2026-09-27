@@ -235,6 +235,13 @@ button:active, .btn:active, .nav-link:active, .theme-toggle:active {
   }
 }
 
+.section-alt {
+  background-color: var(--bg-card);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color var(--transition-smooth), border-color var(--transition-smooth);
+}
+
 /* Section Header styling */
 .section-header {
   margin-bottom: 3.5rem;
@@ -497,6 +504,19 @@ html[dir="rtl"] .lang-dropdown {
   color: var(--lemon-accent);
 }
 
+/* Mobile Actions (Theme Toggle & Hamburger Button) */
+.mobile-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+@media (min-width: 860px) {
+  .mobile-actions {
+    display: none;
+  }
+}
+
 /* Mobile Nav Toggle Button */
 .mobile-toggle {
   display: flex;
@@ -510,12 +530,12 @@ html[dir="rtl"] .lang-dropdown {
   border: 1px solid var(--border-color);
   background: var(--bg-surface);
   box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
 }
 
-@media (min-width: 860px) {
-  .mobile-toggle {
-    display: none;
-  }
+.mobile-toggle:hover {
+  border-color: var(--lemon-accent);
 }
 
 .mobile-toggle span {
@@ -546,19 +566,25 @@ html[dir="rtl"] .lang-dropdown {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--bg-glass);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border-bottom: 1px solid var(--border-glass);
-  padding: 2rem 1.5rem;
+  background-color: var(--bg-main);
+  border-bottom: 1px solid var(--border-color);
+  padding: 1.75rem 1.5rem 3rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.75rem;
   transform: translateY(-100%);
   opacity: 0;
   visibility: hidden;
   transition: transform var(--transition-smooth), opacity var(--transition-smooth), visibility var(--transition-smooth);
   z-index: 999;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 860px) {
+  .mobile-drawer {
+    display: none;
+  }
 }
 
 .mobile-drawer.open {
@@ -570,21 +596,90 @@ html[dir="rtl"] .lang-dropdown {
 .mobile-nav-links {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.15rem;
 }
 
 .mobile-nav-link {
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--text-main);
   border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0.75rem;
+  padding-bottom: 0.65rem;
+}
+
+.mobile-drawer-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.35rem;
+}
+
+.mobile-control-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.65rem;
+}
+
+/* Mobile Segmented Theme Toggle Grid */
+.mobile-theme-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.theme-option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  min-height: 44px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.theme-option:hover {
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border-color: var(--border-hover);
+}
+
+.theme-option.active {
+  background-color: var(--text-main);
+  color: var(--text-inverse);
+  border-color: var(--text-main);
+  font-weight: 700;
+}
+
+.theme-option svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 .mobile-lang-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.75rem;
+}
+
+.mobile-lang-grid .lang-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  text-align: center;
 }
 
 /* --- Hero Section --- */
@@ -792,6 +887,151 @@ html[lang="fa"] .hero-headline {
     transition: none !important;
     animation: none !important;
   }
+}
+
+/* --- Mission Section (Apple HIG Focal Card & Pillars) --- */
+.mission-section {
+  padding-block: 5rem 6rem;
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+@media (min-width: 992px) {
+  .mission-section {
+    padding-block: 6rem 7rem;
+  }
+}
+
+.mission-highlight-card {
+  background-color: var(--bg-glass-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: 2.25rem 1.75rem;
+  margin-bottom: 2.5rem;
+  box-shadow: var(--shadow-md), inset 0 1px 0 var(--glass-highlight);
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .mission-highlight-card {
+    padding: 3rem 2.5rem;
+    margin-bottom: 3rem;
+  }
+}
+
+.mission-highlight-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--lemon-accent), var(--leaf-green));
+}
+
+html[dir="rtl"] .mission-highlight-card::before {
+  left: auto;
+  right: 0;
+}
+
+.mission-quote-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-accent-subtle);
+  color: var(--lemon-hover);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.mission-statement {
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+  max-width: 820px;
+}
+
+@media (min-width: 768px) {
+  .mission-statement {
+    font-size: 1.85rem;
+    line-height: 1.35;
+  }
+}
+
+.mission-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .mission-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.mission-card {
+  background-color: var(--bg-glass-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-smooth), border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+  box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-highlight);
+}
+
+.mission-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--lemon-accent);
+  box-shadow: var(--shadow-md), inset 0 1px 0 var(--glass-highlight);
+}
+
+.mission-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  color: var(--text-main);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.mission-card:hover .mission-icon-wrapper {
+  background-color: var(--lemon-accent);
+  color: #1C1D1F;
+}
+
+.mission-icon-wrapper svg {
+  width: 24px;
+  height: 24px;
+}
+
+.mission-card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.01em;
+}
+
+.mission-card-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
 }
 
 /* --- Services Section (Liquid Glass Cards) --- */
