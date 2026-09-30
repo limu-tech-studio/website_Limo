@@ -158,6 +158,56 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize Language
   setLanguage(currentLang);
 
+  // Hero capability bubbles share the service section's translation keys.
+  const serviceNodes = document.querySelectorAll('.hero-service-node');
+  const serviceDetail = document.getElementById('hero-service-detail');
+  const serviceTitle = document.getElementById('hero-service-title');
+  const serviceDescription = document.getElementById('hero-service-description');
+  let selectedServiceNode = null;
+
+  function closeServiceDetail(restoreFocus = false) {
+    if (!selectedServiceNode) return;
+    const previousNode = selectedServiceNode;
+    previousNode.setAttribute('aria-expanded', 'false');
+    serviceDetail.hidden = true;
+    selectedServiceNode = null;
+    if (restoreFocus) previousNode.focus();
+  }
+
+  if (serviceDetail && serviceTitle && serviceDescription) {
+    serviceNodes.forEach(node => {
+      node.addEventListener('click', () => {
+        if (selectedServiceNode === node) {
+          closeServiceDetail();
+          return;
+        }
+        closeServiceDetail();
+        selectedServiceNode = node;
+        const service = node.dataset.service;
+        serviceDetail.dataset.service = service;
+        [[serviceTitle, `service${service}Title`],
+          [serviceDescription, `service${service}Desc`]].forEach(([element, key]) => {
+          element.dataset.i18n = key;
+          element.textContent = TRANSLATIONS[currentLang][key];
+        });
+        serviceDetail.hidden = false;
+        node.setAttribute('aria-expanded', 'true');
+      });
+      node.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          if (!event.repeat) node.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        }
+      });
+    });
+    serviceDetail.querySelector('.hero-service-close').addEventListener('click', () => closeServiceDetail(true));
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && selectedServiceNode) {
+        closeServiceDetail(serviceDetail.contains(document.activeElement));
+      }
+    });
+  }
+
   // Dropdown toggle
   if (langBtn && langDropdown) {
     langBtn.addEventListener('click', (e) => {

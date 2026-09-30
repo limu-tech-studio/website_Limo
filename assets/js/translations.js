@@ -5,6 +5,7 @@
 
 const TRANSLATIONS = {
   en: {
+    closeService: "Close",
     metaTitle: "Limu — Technology Studio | Italy & Global",
     metaDesc: "Limu is a seven-person technology team based in Italy and working globally. We help traditional businesses grow with websites, apps, and AI.",
     
@@ -107,6 +108,7 @@ const TRANSLATIONS = {
   },
 
   fa: {
+    closeService: "بستن",
     metaTitle: "لیمو — استودیوی فناوری | ایتالیا و جهانی",
     metaDesc: "لیمو یک تیم فناوری هفت‌نفره مستقر در ایتالیا است که به صورت جهانی فعالیت می‌کند. ما به کسب‌وکارهای سنتی کمک می‌کنیم تا با وب‌سایت‌ها، برنامه‌ها و هوش مصنوعی رشد کنند.",
     
@@ -209,6 +211,7 @@ const TRANSLATIONS = {
   },
 
   it: {
+    closeService: "Chiudi",
     metaTitle: "Limu — Studio Tecnologico | Italia & Globale",
     metaDesc: "Limu è un team tecnologico di sette persone con sede in Italia e operativo a livello globale. Aiutiamo le aziende tradizionali a crescere con siti web, app e IA.",
     
@@ -311,6 +314,7 @@ const TRANSLATIONS = {
   },
 
   tr: {
+    closeService: "Kapat",
     metaTitle: "Limu — Teknoloji Stüdyosu | İtalya & Küresel",
     metaDesc: "Limu, İtalya merkezli ve küresel ölçekte çalışan yedi kişilik bir teknoloji ekibidir. Geleneksel işletmelerin web siteleri, uygulamalar ve yapay zeka ile büyümesine yardımcı oluyoruz.",
     

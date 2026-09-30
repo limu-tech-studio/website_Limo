@@ -855,6 +855,105 @@ html[lang="fa"] .hero-headline {
   height: 100%;
 }
 
+[data-service="1"] {
+  --service-accent: #3B82F6;
+  --service-label: #1D4ED8;
+}
+
+[data-service="2"] {
+  --service-accent: #22C55E;
+  --service-label: #166534;
+}
+
+[data-service="3"] {
+  --service-accent: #A855F7;
+  --service-label: #7E22CE;
+}
+
+[data-service="4"] {
+  --service-accent: #EC4899;
+  --service-label: #BE185D;
+}
+
+[data-theme="dark"] [data-service] {
+  --service-label: var(--service-accent);
+}
+
+.hero-service-node {
+  cursor: pointer;
+  outline: none;
+}
+
+.hero-service-node .node-surface {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform var(--transition-spring), filter var(--transition-fast);
+}
+
+.hero-service-node:hover .node-surface,
+.hero-service-node:focus-visible .node-surface,
+.hero-service-node[aria-expanded="true"] .node-surface {
+  transform: scale(1.12);
+  filter: drop-shadow(0 0 6px var(--service-accent));
+}
+
+.hero-service-node:hover,
+.hero-service-node:focus-visible,
+.hero-service-node[aria-expanded="true"] {
+  animation-play-state: paused;
+}
+
+.hero-service-node:focus-visible .node-focus-ring {
+  stroke: var(--text-main);
+  stroke-width: 2;
+  stroke-dasharray: 3 3;
+}
+
+.hero-service-detail {
+  position: relative;
+  max-width: 480px;
+  margin: 1rem auto 0;
+  padding: 1.25rem;
+  padding-inline-end: 3.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--service-accent, var(--border-color));
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.hero-service-detail h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero-service-detail p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.hero-service-close {
+  position: absolute;
+  inset-block-start: 0.5rem;
+  inset-inline-end: 0.5rem;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-main);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.hero-service-close:hover {
+  background: var(--bg-card-hover);
+}
+
+.hero-service-close:focus-visible {
+  outline: 2px solid var(--border-focus);
+}
+
 /* SVG Hero Animation States */
 .node-pulse {
   animation: pulseGlow 3s infinite alternate cubic-bezier(0.4, 0, 0.6, 1);
