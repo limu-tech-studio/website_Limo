@@ -184,7 +184,6 @@ document.addEventListener('DOMContentLoaded', () => {
         closeServiceDetail();
         selectedServiceNode = node;
         const service = node.dataset.service;
-        serviceDetail.dataset.service = service;
         [[serviceTitle, `service${service}Title`],
           [serviceDescription, `service${service}Desc`]].forEach(([element, key]) => {
           element.dataset.i18n = key;
@@ -192,12 +191,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         serviceDetail.hidden = false;
         node.setAttribute('aria-expanded', 'true');
-      });
-      node.addEventListener('keydown', event => {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          if (!event.repeat) node.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        }
       });
     });
     serviceDetail.querySelector('.hero-service-close').addEventListener('click', () => closeServiceDetail(true));

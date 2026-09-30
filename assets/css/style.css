@@ -853,60 +853,60 @@ html[lang="fa"] .hero-headline {
 .hero-svg-anim {
   width: 100%;
   height: 100%;
+  pointer-events: none;
 }
 
-[data-service="1"] {
-  --service-accent: #3B82F6;
-  --service-label: #1D4ED8;
-}
-
-[data-service="2"] {
-  --service-accent: #22C55E;
-  --service-label: #166534;
-}
-
-[data-service="3"] {
-  --service-accent: #A855F7;
-  --service-label: #7E22CE;
-}
-
-[data-service="4"] {
-  --service-accent: #EC4899;
-  --service-label: #BE185D;
-}
-
-[data-theme="dark"] [data-service] {
-  --service-label: var(--service-accent);
-}
-
+/* Native buttons provide stable mouse, touch, and keyboard hit areas. */
 .hero-service-node {
+  pointer-events: auto;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
   cursor: pointer;
   outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.hero-service-node .node-surface {
-  transform-box: fill-box;
-  transform-origin: center;
-  transition: transform var(--transition-spring), filter var(--transition-fast);
+.hero-service-node:active {
+  transform: none !important;
 }
 
-.hero-service-node:hover .node-surface,
-.hero-service-node:focus-visible .node-surface,
-.hero-service-node[aria-expanded="true"] .node-surface {
-  transform: scale(1.12);
-  filter: drop-shadow(0 0 6px var(--service-accent));
+.hero-service-bubble .node-surface {
+  pointer-events: none;
+  transform-box: view-box;
+  transition: transform var(--transition-spring);
 }
 
-.hero-service-node:hover,
-.hero-service-node:focus-visible,
-.hero-service-node[aria-expanded="true"] {
+.node-halo {
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.hero-service-bubble:has(.hero-service-node:hover) .node-surface,
+.hero-service-bubble:has(.hero-service-node:focus-visible) .node-surface {
+  transform: translateY(-4px) scale(1.12);
+}
+
+.hero-service-bubble:has(.hero-service-node:hover) .node-halo,
+.hero-service-bubble:has(.hero-service-node:focus-visible) .node-halo,
+.hero-service-bubble:has(.hero-service-node[aria-expanded="true"]) .node-halo {
+  opacity: 0.2;
+}
+
+.hero-service-bubble:has(.hero-service-node:hover),
+.hero-service-bubble:has(.hero-service-node:focus-visible),
+.hero-service-bubble:has(.hero-service-node[aria-expanded="true"]) {
   animation-play-state: paused;
 }
 
-.hero-service-node:focus-visible .node-focus-ring {
-  stroke: var(--text-main);
-  stroke-width: 2;
-  stroke-dasharray: 3 3;
+.hero-service-bubble:has(.hero-service-node:focus-visible) text {
+  text-decoration: underline;
+  fill-opacity: 1;
 }
 
 .hero-service-detail {
@@ -916,7 +916,7 @@ html[lang="fa"] .hero-headline {
   padding: 1.25rem;
   padding-inline-end: 3.5rem;
   background: var(--bg-card);
-  border: 1px solid var(--service-accent, var(--border-color));
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
 }
