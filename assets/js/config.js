@@ -5,7 +5,7 @@
 
 const LIMU_CONFIG = {
   // Studio Contact Email Address
-  contactEmail: "limo.tech.studio@gmail.com",
+  contactEmail: "limu.tech.studio@gmail.com",
 
   // Team profiles configuration
   team: [
