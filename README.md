@@ -77,7 +77,7 @@ Then follow steps 3-5 in Settings > Pages above.
 ## Project File Structure
 
 ```
-website_Limo/
+website_Limu/
 ├── index.html                  # Main single-page document
 ├── favicon.svg                 # SVG Favicon
 ├── favicon.ico                 # Fallback ICO Favicon
